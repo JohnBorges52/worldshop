@@ -1,6 +1,10 @@
 
 import '../style/ItemContainer.scss'
 
+
+
+
+
 export default function ItemContainer(props) {
 
   return (
@@ -35,15 +39,20 @@ export default function ItemContainer(props) {
         </div>
   </div>
         <div className='bottom-box'>
+          <div className='quantity-add-action'>
+
           <div className="quantity-container">
-          <button className='increase-count'>+</button>
-            <div className='item-count'>5</div>            
-            <button className='decrease-count'>-</button>
+          <button className='increase-count'>-</button>
+            <div className='item-count'>{props.quantity}</div>            
+            <button className='decrease-count'>+</button>
         
           </div>  
+
+            <button className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</button>
+          </div>
           <div className="delete-item-box" >
             
-            <button className='delete-item'>Delete</button>
+            <button className='delete-item' onClick={props.onDelete}>Delete</button>
            
           </div>
         </div>

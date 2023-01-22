@@ -1,7 +1,7 @@
 import React from 'react';
 import "../style/products.scss";
 import  { useEffect, useState } from 'react';
-import Pagination, { paginationClasses } from '@mui/material/Pagination';
+import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 import ItemContainer from './ItemContainer';
@@ -14,26 +14,17 @@ export default function Products() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [range, setRange] = useState({
-    initial: 0,
-    final: 0
+    initial: 1,
+    final: 15
   })
+  const [shoppingCart, setShoppingCart] = useState([]);
 
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    setRange({initial:((value*15)-14), final: value* 15})
+    setRange({initial:((value*pageSize)-14), final: value* pageSize})
     
   };
-
-  useEffect(()=>{
-   
-    
-
-  },[currentPage])
-  
-
-
-
 
   const options = {
     method: 'GET',
@@ -52,10 +43,25 @@ export default function Products() {
   }
 
   useEffect(() => {
-    getItems()
+    getItems();
     
   }, [])
 
+
+
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
+
+  useEffect(()=>{
+    localStorage.setItem("cart", JSON.stringify(shoppingCart))
+  },[shoppingCart])
+
+  const addItem = (itemId, itemName, itemQuantity) =>{
+    
+    const item = [itemId, itemName, itemQuantity]
+    setShoppingCart([...shoppingCart, item])
+    console.log(shoppingCart)
+
+}
 
 
 
@@ -75,7 +81,21 @@ export default function Products() {
     {items.map((element, index) => {
         if (index >= range.initial && index <= range.final) {
           return (
-            <ItemContainer key={element.id} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} />
+            <ItemContainer 
+            key={element.productId} 
+            image={element.img} 
+            imgalt={element.name} 
+            description={element.productName} 
+            price={element.senderFee} 
+            currency={element.senderCurrencyCode} 
+            type={element.type} 
+            country={element.country.name} 
+            redeem={element.description} 
+            addItem={()=> addItem(element.productId, element.name, element.type)} 
+            onDelete={()=> {console.log(cartFromLocalStorage)}}
+            // quantity={}
+            
+            />
           )
         }
       })}
