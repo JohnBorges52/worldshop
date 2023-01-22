@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 
 import '../style/ItemContainer.scss'
 
@@ -11,7 +10,6 @@ export default function ItemContainer(props) {
           <div className="item-img-container">
             <img className="item-img" src={props.image} alt={props.imgalt} />
           </div>
-         
         </div>
         <div className="right-size-box">
           <div className="item-description">
@@ -37,9 +35,15 @@ export default function ItemContainer(props) {
         </div>
   </div>
         <div className='bottom-box'>
-          <div className="quantaty-container"> +/-
+          <div className="quantity-container">
+          <button className='increase-count'>+</button>
+            <div className='item-count'>5</div>            
+            <button className='decrease-count'>-</button>
+        
           </div>  
-          <div className="delete-save-item-box" > button bytton
+          <div className="delete-item-box" >
+            
+            <button className='delete-item'>Delete</button>
            
           </div>
         </div>
