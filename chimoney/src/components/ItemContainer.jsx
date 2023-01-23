@@ -34,26 +34,25 @@ export default function ItemContainer(props) {
           <div className='redeem-box'>
             <span>{props.redeem}</span>
           </div>
-       
 
         </div>
   </div>
         <div className='bottom-box'>
           <div className='quantity-add-action'>
 
+          {!props.productPage && 
           <div className="quantity-container">
-          <button className='increase-count'>-</button>
+            <button className='increase-count'onClick={props.onDecrease}>-</button>
             <div className='item-count'>{props.quantity}</div>            
-            <button className='decrease-count'>+</button>
-        
+            <button className='decrease-count' onClick={props.onIncrease}>+</button>
           </div>  
+          }
 
             <button className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</button>
           </div>
           <div className="delete-item-box" >
             
             <button className='delete-item' onClick={props.onDelete}>Delete</button>
-           
           </div>
         </div>
       </div>

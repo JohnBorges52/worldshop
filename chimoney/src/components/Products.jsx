@@ -11,14 +11,13 @@ export default function Products() {
 
   const pageSize = 15;
   const [items, setItems] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [range, setRange] = useState({
     initial: 1,
     final: 15
   })
   const [shoppingCart, setShoppingCart] = useState([]);
-
+  const [qty, setQty] = useState(1)
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -43,38 +42,44 @@ export default function Products() {
   }
 
   useEffect(() => {
+    const data = localStorage.getItem('cart');
+    if(data){
+      setShoppingCart(JSON.parse(data))
+    }
     getItems();
     
   }, [])
-
-
-
-  const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
 
   useEffect(()=>{
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
   },[shoppingCart])
 
-  const addItem = (itemId, itemName, itemQuantity) =>{
-    
-    const item = [itemId, itemName, itemQuantity]
-    setShoppingCart([...shoppingCart, item])
-    console.log(shoppingCart)
-
+  const addItem = (itemId, itemName, itemQuantity) => {
+    const product = [itemId, itemName, itemQuantity]
+    if(shoppingCart.length === 0){
+      setShoppingCart([...shoppingCart, product])
+    } else{
+        const isInside = shoppingCart.filter(item => item[0] === itemId);
+        if(isInside.length ===0){
+          setShoppingCart([...shoppingCart, product])
+        } else{
+          shoppingCart.map(element => {
+            if(element[0]=== itemId){
+              element[2]++
+            }
+          })
+        }
+    }
 }
-
-
 
   return (
     <div className='products-main-container'>
-
     <div className='top-nav'>
       <ul>
         <li className='WorldShop'>WorldShop</li>
         <li>Products</li>
-        <li onClick={()=>console.log(items.length)}>Cart</li>
+        <li> <a href='/cart'>Cart</a></li>
       </ul>
-
     </div>
 
     <div className='products-browser-container'>
@@ -91,10 +96,12 @@ export default function Products() {
             type={element.type} 
             country={element.country.name} 
             redeem={element.description} 
-            addItem={()=> addItem(element.productId, element.name, element.type)} 
-            onDelete={()=> {console.log(cartFromLocalStorage)}}
-            // quantity={}
-            
+            addItem={()=> addItem(element.productId, element.name, 1)} 
+            onDelete={()=> {console.log(shoppingCart)}}
+            // onIncrease={()=>{setQty(qty+1)}}
+            // onDecrease={()=>{setQty(qty-1)}}
+            quantity={qty}
+            productPage={true}
             />
           )
         }
@@ -105,7 +112,6 @@ export default function Products() {
       <Stack spacing={2}>
         <Pagination count={Math.ceil(items.length / pageSize)} size="small" color="secondary" page={currentPage} onChange={handleChange}/>
       </Stack>
-    
 
       </div>
     </div>
