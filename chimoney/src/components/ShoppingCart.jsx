@@ -5,9 +5,10 @@ import ItemContainer from './ItemContainer';
 
 export default function ShoppingCart() {
 
-  const [items, setItems] = useState([]);
-
   const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
+  const [items, setItems] = useState([]);
+  const[ mycart, setMycart] = useState(cartFromLocalStorage)
+
   const options = {
     method: 'GET',
     headers: {
@@ -32,9 +33,9 @@ export default function ShoppingCart() {
 
 
   useEffect(()=>{
-    console.log(cartFromLocalStorage)
+    const data = localStorage.getItem('cart');
+    setMycart(JSON.parse(data))
   },[])
-
 
 
   const handleIncrease = (product) => {
@@ -43,10 +44,43 @@ export default function ShoppingCart() {
 
       if(product === element[0]){
         element[2]++
-        console.log("ACHEI")
       }
     })
+    localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage))
+    setMycart(JSON.parse(localStorage.getItem('cart')))
   }
+
+  const handleDecrease = (product) => {
+    cartFromLocalStorage.map(element => {
+
+      if(product === element[0] && element[2] > 0){
+        element[2]--
+      }
+    })
+    localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage))
+    setMycart(JSON.parse(localStorage.getItem('cart')))
+  }
+
+  const handleDelete = (product) => {
+    let data = JSON.parse(localStorage.getItem('cart'));
+    
+    console.log("1",data)
+    for (let i = 0; i < data.length; i++) {
+      if(data[i][0] === product){
+        data.splice(i,1);
+        break;
+      }
+
+    }
+    localStorage.setItem("cart", JSON.stringify(data))
+    setMycart(JSON.parse(localStorage.getItem('cart')))
+
+    console.log(data)
+
+      
+  }
+
+
 
   return (
     <div className="main-container">
@@ -66,6 +100,7 @@ export default function ShoppingCart() {
       <div className="gift-message">
         <input type="checkbox"></input>
         <span>Send as a gift. Include custom message</span>
+        <button onClick={()=>console.log(JSON.parse(localStorage.getItem('cart')))}>play</button>
       </div>
 
       <hr className='item-hr' />
@@ -75,14 +110,16 @@ export default function ShoppingCart() {
           for(let product of cartFromLocalStorage){
             if(element.productId === product[0]){
               return (
-                <ItemContainer key={element.productId} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} quantity={product[2]} onDelete={()=>console.log(cartFromLocalStorage)}  onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=>{}}  />
+                <ItemContainer key={element.productId} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} quantity={product[2]} 
+                onDelete={()=> handleDelete(element.productId)} 
+                onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=>handleDecrease(element.productId)}  />
                 )
               }
             }
             
           }
       })} 
-
+       
     </div>
   )
 }
