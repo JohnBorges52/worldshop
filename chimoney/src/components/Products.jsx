@@ -5,6 +5,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 import ItemContainer from './ItemContainer';
+import TopNav from './TopNav';
 
 
 export default function Products() {
@@ -21,7 +22,7 @@ export default function Products() {
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    setRange({initial:((value*pageSize)-14), final: value* pageSize})
+    setRange({initial:((value * pageSize)-pageSize - 1), final: value * pageSize})
     
   };
 
@@ -51,7 +52,7 @@ export default function Products() {
   }, [])
 
   useEffect(()=>{
-    localStorage.setItem("cart", JSON.stringify(shoppingCart))
+    // localStorage.setItem("cart", JSON.stringify(shoppingCart))
   },[shoppingCart])
 
   const addItem = (itemId, itemName, itemQuantity) => {
@@ -70,18 +71,12 @@ export default function Products() {
           })
         }
     }
+    localStorage.setItem("cart", JSON.stringify(shoppingCart))
 }
 
   return (
     <div className='products-main-container'>
-    <div className='top-nav'>
-      <ul>
-        <li className='WorldShop'>WorldShop</li>
-        <li>Products</li>
-        <li> <a href='/cart'>Cart</a></li>
-      </ul>
-    </div>
-
+      <TopNav />
     <div className='products-browser-container'>
     {items.map((element, index) => {
         if (index >= range.initial && index <= range.final) {
@@ -98,8 +93,6 @@ export default function Products() {
             redeem={element.description} 
             addItem={()=> addItem(element.productId, element.name, 1)} 
             onDelete={()=> {console.log(shoppingCart)}}
-            // onIncrease={()=>{setQty(qty+1)}}
-            // onDecrease={()=>{setQty(qty-1)}}
             quantity={qty}
             productPage={true}
             />

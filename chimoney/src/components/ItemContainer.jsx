@@ -48,12 +48,17 @@ export default function ItemContainer(props) {
           </div>  
           }
 
-            <button className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</button>
+            {props.productPage &&
+              <button className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</button>
+            }
           </div>
+
+          {/* {!props.productPage && */}
           <div className="delete-item-box" >
             
             <button className='delete-item' onClick={props.onDelete}>Delete</button>
           </div>
+          {/* } */}
         </div>
       </div>
   )
