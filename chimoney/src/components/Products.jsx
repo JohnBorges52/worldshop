@@ -81,7 +81,7 @@ export default function Products() {
     <div className='products-browser-container'>
       <Notification 
         message={"You added this item to your cart"}
-        isCart={false}
+        isCart={true}
 
       />
     {items.map((element, index) => {
