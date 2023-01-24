@@ -4,7 +4,7 @@ import "../style/notification.scss";
 
 export default function Notification(props) {
   return (
-    <div className='notification-container'>
+    <div className='notification-container' id='animation'>
 
     <span>{props.message}</span>
     {props.isCart &&

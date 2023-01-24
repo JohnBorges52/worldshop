@@ -16,7 +16,7 @@
   border-radius: 5px;
   background-color: rgb(118, 223, 108) ;
   box-shadow: 5px 10px 30px -3px #8d8d8d;
-  animation: moveDown 5s ease forwards ;
+ 
 
 
   z-index: 5;
@@ -54,6 +54,12 @@
     }
   }
 
+}
+.animationBounce{
+  animation: moveDown 5s ease forwards ;
+}
+.animationNone{
+  animation: none;
 }
 
 @keyframes moveDown {

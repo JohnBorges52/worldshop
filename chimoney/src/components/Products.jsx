@@ -21,6 +21,8 @@ export default function Products() {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(1)
 
+  const [isNotification, setIsNotification] = useState(false)
+
   const handleChange = (event, value) => {
     setCurrentPage(value);
     setRange({initial:((value * pageSize)-pageSize - 1), final: value * pageSize})
@@ -52,6 +54,7 @@ export default function Products() {
     
   }, [])
 
+
   useEffect(()=>{
     // localStorage.setItem("cart", JSON.stringify(shoppingCart))
   },[shoppingCart])
@@ -75,15 +78,40 @@ export default function Products() {
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
 }
 
+const addNotification = () =>{
+
+  const element = document.getElementById("animation");
+  console.log(element)
+  
+  if(element.classList.contains("animationBounce")){
+    
+    element.classList.remove("animationBounce");
+    console.log("I removeD", element)
+    setInterval(()=>{
+      element.classList.add("animationBounce");
+    },20)
+
+  } else{
+    element.classList.contains("animationBounce")
+    element.classList.add("animationBounce");
+  }
+}
+
+
+
+
+
   return (
     <div className='products-main-container'>
       <TopNav />
     <div className='products-browser-container'>
+      
       <Notification 
-        message={"You added this item to your cart"}
-        isCart={true}
-
+      message={"You added this item to your cart"}
+      isCart={false}
       />
+    
+
     {items.map((element, index) => {
         if (index >= range.initial && index <= range.final) {
           return (
@@ -97,7 +125,7 @@ export default function Products() {
             type={element.type} 
             country={element.country.name} 
             redeem={element.description} 
-            addItem={()=> addItem(element.productId, element.name, 1)} 
+            addItem={()=> {addItem(element.productId, element.name, 1); addNotification()}} 
             onDelete={()=> {console.log(shoppingCart)}}
             quantity={qty}
             productPage={true}
