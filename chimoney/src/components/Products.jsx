@@ -3,6 +3,7 @@ import "../style/products.scss";
 import  { useEffect, useState } from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Notification from './Notification';
 
 import ItemContainer from './ItemContainer';
 import TopNav from './TopNav';
@@ -78,6 +79,11 @@ export default function Products() {
     <div className='products-main-container'>
       <TopNav />
     <div className='products-browser-container'>
+      <Notification 
+        message={"You added this item to your cart"}
+        isCart={false}
+
+      />
     {items.map((element, index) => {
         if (index >= range.initial && index <= range.final) {
           return (
