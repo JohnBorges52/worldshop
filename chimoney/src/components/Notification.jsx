@@ -4,13 +4,13 @@ import "../style/notification.scss";
 
 export default function Notification(props) {
   return (
-    <div className='notification-container' id='animation'>
+    <div className={props.classname} id='animation'>
 
     <span>{props.message}</span>
     {props.isCart &&
       <div className='btn-container'>
-    <button onClick={props.confirm}>OK</button>
-    <button onClick={props.confirm}>NO</button>
+    <button onClick={props.onConfirm}>OK</button>
+    <button onClick={props.onCancel}>NO</button>
       </div>
     }
       

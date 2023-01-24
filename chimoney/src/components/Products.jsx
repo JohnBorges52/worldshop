@@ -21,7 +21,6 @@ export default function Products() {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(1)
 
-  const [isNotification, setIsNotification] = useState(false)
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -78,15 +77,11 @@ export default function Products() {
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
 }
 
-const addNotification = () =>{
+const addNotification = () => {
 
   const element = document.getElementById("animation");
-  console.log(element)
-  
   if(element.classList.contains("animationBounce")){
-    
     element.classList.remove("animationBounce");
-    console.log("I removeD", element)
     setInterval(()=>{
       element.classList.add("animationBounce");
     },20)
@@ -97,10 +92,6 @@ const addNotification = () =>{
   }
 }
 
-
-
-
-
   return (
     <div className='products-main-container'>
       <TopNav />
@@ -109,6 +100,7 @@ const addNotification = () =>{
       <Notification 
       message={"You added this item to your cart"}
       isCart={false}
+      classname={"notification-container"}
       />
     
 

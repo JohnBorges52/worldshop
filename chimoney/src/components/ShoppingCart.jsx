@@ -2,12 +2,17 @@ import "../style/index.css"
 import '../style/shoppingCart.scss';
 import React, { useEffect, useState } from 'react';
 import ItemContainer from './ItemContainer';
+import TopNav from "./TopNav";
+import Notification from "./Notification";
 
 export default function ShoppingCart() {
 
   const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
   const [items, setItems] = useState([]);
   const[ mycart, setMycart] = useState(cartFromLocalStorage)
+
+  const [isPopUp, setIsPopUp] = useState(false)
+  const [currentProductId, setCurrentProductId] = useState(0)
 
   const options = {
     method: 'GET',
@@ -26,11 +31,8 @@ export default function ShoppingCart() {
   }
 
   useEffect(() => {
-
     getItems();
-    
   }, [])
-
 
   useEffect(()=>{
     const data = localStorage.getItem('cart');
@@ -74,16 +76,24 @@ export default function ShoppingCart() {
     }
     localStorage.setItem("cart", JSON.stringify(data))
     setMycart(JSON.parse(localStorage.getItem('cart')))
-
-    console.log(data)
-
+    setIsPopUp(false)
       
   }
 
-
-
   return (
+
     <div className="main-container">
+
+      <TopNav />
+      {isPopUp &&
+      < Notification 
+      message={"Do you want to remove this item from the cart?"}
+      onConfirm={()=>handleDelete(currentProductId)}
+      onCancel={()=>setIsPopUp(false)}
+      isCart={true}
+      classname={"notification-container moveDownAndStay"}
+      />
+      }
 
       <div className="subtotal-box">
         <span className="subtotal-span">Subtotal</span><span className="totalprice-span">3.403.29</span>
@@ -111,15 +121,15 @@ export default function ShoppingCart() {
             if(element.productId === product[0]){
               return (
                 <ItemContainer key={element.productId} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} quantity={product[2]} 
-                onDelete={()=> handleDelete(element.productId)} 
-                onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=>handleDecrease(element.productId)}  />
+                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);}} 
+                onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=> handleDecrease(element.productId)}  />
+                
                 )
               }
             }
             
           }
-      })} 
-       
+      })}      
     </div>
   )
 }

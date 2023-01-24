@@ -54,12 +54,12 @@ export default function ItemContainer(props) {
             }
           </div>
 
-          {/* {!props.productPage && */}
+          {!props.productPage &&
           <div className="delete-item-box" >
             
             <button className='delete-item' onClick={props.onDelete}>Delete</button>
           </div>
-          {/* } */}
+          } 
         </div>
       </div>
   )

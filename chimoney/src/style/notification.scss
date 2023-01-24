@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 310px;
-  padding: 15px 0;
+  padding: 15px 10px;
   justify-content: center;
   align-items: center;
   border: 1px solid white;
@@ -16,6 +16,7 @@
   border-radius: 5px;
   background-color: rgb(118, 223, 108) ;
   box-shadow: 5px 10px 30px -3px #8d8d8d;
+  text-align: center;
  
 
 
@@ -58,15 +59,21 @@
 .animationBounce{
   animation: moveDown 5s ease forwards ;
 }
-.animationNone{
-  animation: none;
+
+.moveDownAndStay{
+  animation: moveDownAndStay 2s ease forwards ;
 }
 
 @keyframes moveDown {
   
   0%   {  transform:  translateY(0); }
-  15%   { transform: translateY(250px); }
-  55%   { opacity: 1; transform: translateY(250px); }
-  100%   { opacity: 0;transform: translateY(-250px); }
+  15%   { transform: translateY(220px); position: fixed }
+  55%   { opacity: 1; transform: translateY(220px); position: fixed }
+  100%   { opacity: 0;transform: translateY(-220px); }
 
+}
+
+@keyframes moveDownAndStay {
+  0%   {  transform:  translateY(0); }
+  100%   { transform: translateY(220px);position: fixed }
 }
