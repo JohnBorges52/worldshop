@@ -19,7 +19,8 @@ export default function Products() {
     final: 15
   })
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [qty, setQty] = useState(1)
+  const [qty, setQty] = useState(0)
+  
 
 
   const handleChange = (event, value) => {
@@ -55,8 +56,8 @@ export default function Products() {
 
 
   useEffect(()=>{
-    // localStorage.setItem("cart", JSON.stringify(shoppingCart))
-  },[shoppingCart])
+    countItems()
+  },[])
 
   const addItem = (itemId, itemName, itemQuantity) => {
     const product = [itemId, itemName, itemQuantity]
@@ -77,8 +78,12 @@ export default function Products() {
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
 }
 
-const addNotification = () => {
+const countItems = () =>{
+  const data = JSON.parse(localStorage.getItem('cart'))
+  setQty(data.length)
+}
 
+const addNotification = () => {
   const element = document.getElementById("animation");
   if(element.classList.contains("animationBounce")){
     element.classList.remove("animationBounce");
@@ -94,7 +99,11 @@ const addNotification = () => {
 
   return (
     <div className='products-main-container'>
-      <TopNav />
+      <TopNav 
+      count={qty}
+
+      click={()=>{countItems()}}
+      />
     <div className='products-browser-container'>
       
       <Notification 
@@ -119,7 +128,6 @@ const addNotification = () => {
             redeem={element.description} 
             addItem={()=> {addItem(element.productId, element.name, 1); addNotification()}} 
             onDelete={()=> {console.log(shoppingCart)}}
-            quantity={qty}
             productPage={true}
             />
           )
