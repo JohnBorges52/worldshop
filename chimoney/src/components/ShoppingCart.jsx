@@ -38,9 +38,7 @@ export default function ShoppingCart() {
     setMycart(JSON.parse(data))
   }, [])
 
-  useEffect(()=>{
-    countItems();
-  },[qty])
+  
 
 
   const handleIncrease = (product) => {

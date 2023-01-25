@@ -52,33 +52,44 @@ export default function Products() {
     const data = localStorage.getItem('cart');
     if(data){
       setShoppingCart(JSON.parse(data))
+    } else{
+      localStorage.setItem("cart", JSON.stringify(shoppingCart))
     }
     getItems();
-    
   }, [])
 
 
   useEffect(()=>{
-    countItems()
+    countItems();
+
   },[])
 
+useEffect(()=>{
+  localStorage.setItem("cart", JSON.stringify(shoppingCart))
+  countItems();
+},[shoppingCart])
+
+
   const addItem = (itemId, itemName, itemQuantity) => {
+    
     const product = [itemId, itemName, itemQuantity]
     if(shoppingCart.length === 0){
       setShoppingCart([...shoppingCart, product])
     } else{
-        const isInside = shoppingCart.filter(item => item[0] === itemId);
-        if(isInside.length ===0){
-          setShoppingCart([...shoppingCart, product])
-        } else{
-          shoppingCart.map(element => {
-            if(element[0]=== itemId){
-              element[2]++
-            }
-          })
-        }
+      const isInside = shoppingCart.filter(item => item[0] === itemId);
+      if(isInside.length === 0){
+        setShoppingCart([...shoppingCart, product])
+      } else{
+        shoppingCart.map(element => {
+          if(element[0] === itemId){
+            element[2]++
+          }
+        })
+      }
     }
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
+    console.log("cart:" ,JSON.parse(localStorage.getItem('cart')))
+    console.log("ShoppingCar:", shoppingCart)
 }
 
 
