@@ -59,10 +59,6 @@ export default function Products() {
   }, [])
 
 
-  useEffect(()=>{
-    countItems();
-
-  },[])
 
 useEffect(()=>{
   localStorage.setItem("cart", JSON.stringify(shoppingCart))
@@ -108,22 +104,37 @@ const addNotification = () => {
     },20)
 
   } else{
-    element.classList.contains("animationBounce")
     element.classList.add("animationBounce");
   }
 }
 
+
+const Addblur = () =>{
+  const element = document.getElementById("on-blur")
+  if(!element.classList.contains("blur-container") && !isCart){
+    element.classList.add("blur-container");
+  }
+}
+
+const removeBlur = () => {
+  const element = document.getElementById("on-blur")
+  if(element.classList.contains("blur-container") && isCart) {
+    element.classList.remove("blur-container");
+  }
+}
+
   return (
-    <div className='products-main-container'>
+    <>
+      <TopNav 
+      count={qty}
+      click={()=>{setIsCart(true); Addblur(); window.scrollTo(0, 0)}}
+      close={()=>{setIsCart(false);removeBlur()}}
+      />
       {isCart && 
       <ShoppingCart />
       }
-      <TopNav 
-      count={qty}
-      click={()=>{setIsCart(true)}}
-      x={()=>setIsCart(false)}
-      />
-    <div className='products-browser-container'>
+    <div className='products-main-container' id='on-blur'>
+      <div className='products-browser-container'>
       
       <Notification 
       message={"You added this item to your cart"}
@@ -133,33 +144,34 @@ const addNotification = () => {
     
 
     {items.map((element, index) => {
-        if (index >= range.initial && index <= range.final) {
-          return (
-            <ItemContainer 
-            key={element.productId} 
-            image={element.img} 
-            imgalt={element.name} 
-            description={element.productName} 
-            price={element.senderFee} 
-            currency={element.senderCurrencyCode} 
-            type={element.type} 
-            country={element.country.name} 
-            redeem={element.description} 
-            addItem={()=> {addItem(element.productId, element.name, 1); addNotification();countItems()}} 
-            onDelete={()=> {console.log(shoppingCart)}}
-            productPage={true}
-            />
+      if (index >= range.initial && index <= range.final) {
+        return (
+          <ItemContainer 
+          key={element.productId} 
+          image={element.img} 
+          imgalt={element.name} 
+          description={element.productName} 
+          price={element.senderFee} 
+          currency={element.senderCurrencyCode} 
+          type={element.type} 
+          country={element.country.name} 
+          redeem={element.description} 
+          addItem={()=> {addItem(element.productId, element.name, 1); addNotification();countItems()}} 
+          onDelete={()=> {console.log(shoppingCart)}}
+          productPage={true}
+          />
           )
         }
       })}
     </div>
 
-      <div className='pagination-container'>
+<div className='pagination-container'>
       <Stack spacing={2}>
-        <Pagination count={Math.ceil(items.length / pageSize)} size="small" color="secondary" page={currentPage} onChange={handleChange}/>
+        <Pagination count={Math.ceil(items.length / pageSize)} size="normal" color="secondary" page={currentPage} onChange={handleChange}/>
       </Stack>
 
       </div>
     </div>
-  )
+    </>
+    )
 }

@@ -4,6 +4,10 @@
   background-color: rgb(201, 85, 77);
   align-items: center;
   line-height: 90px;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 5;
 
   ul{
     margin: 0;

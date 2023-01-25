@@ -34,6 +34,7 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     getItems();
+    countItems();
     const data = localStorage.getItem('cart');
     setMycart(JSON.parse(data))
   }, [])
