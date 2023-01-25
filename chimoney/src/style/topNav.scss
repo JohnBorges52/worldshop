@@ -1,6 +1,7 @@
 .top-nav{
   height: 90px;
-  background-color: rgb(236, 91, 255);
+  // background-image: linear-gradient(to right,  rgb(201, 85, 77), rgb(255, 155, 148));
+  background-color: rgb(201, 85, 77);
   align-items: center;
   line-height: 90px;
 
@@ -10,45 +11,66 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    position: relative;
 
     
     li{
       list-style: none;
       font-weight: 300;
-      font-size: 1em;
+      font-size: 1.3em;
       cursor: pointer;
       color: white;
       display: flex;
       align-items: center;
 
+      &:hover{
+        text-decoration: underline;
+      }
+
       .cart-img{
-        width: 40px;
-        height: 40px;
-        background-image: url(../../public/resourses/icons8-shopping-cart-64.png);
+        width: 30px;
+        height: 30px;
+        background-image: url(../../public/resourses/icons8-shopping-cart-white-stroke.png);
         background-size: 60%;
         background-repeat: no-repeat;
         background-position: center;
-        border: 1px solid white;
+        border: 1px solid transparent;
         border-radius: 50%;
         padding: 6px;
         position: relative;
+        background-color: rgba(252, 7, 19, 0.815);
+        border: 2px solid white;
+        transition: all .5s ease;
+        cursor: pointer;
+
+        &:hover{
+        background-color: rgb(252, 7, 19);
+
+        }
+
+        .cart-count{
+          position: absolute;
+          color: rgb(255, 255, 255);
+          border: 2px solid white;
+          background-color: red;
+          border-radius: 50%;
+          right: -17px;
+          top: -10px;
+          font-size: 1em;
+          font-weight: 600;
+          text-align: center;
+          line-height: 25px;
+          width: 25px;
+        
+        }
+
 
       }
     }
     .WorldShop{
-      font-size:  1.2em;
+      font-size:  1.5em;
       text-decoration: underline;
     }
   }
-
 }
 
-.cart-count{
-  position: absolute;
-  color: green;
-  border: 1px solid red;
-  right: 0;
-  font-size: 1.5em;
-  height: 20px;
-  text-align: center;
-}

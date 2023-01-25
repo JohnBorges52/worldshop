@@ -10,6 +10,8 @@ export default function ShoppingCart() {
   const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
   const [items, setItems] = useState([]);
   const[ mycart, setMycart] = useState(cartFromLocalStorage)
+  const [qty, setQty] = useState(0)
+
 
   const [isPopUp, setIsPopUp] = useState(false)
   const [currentProductId, setCurrentProductId] = useState(0)
@@ -32,12 +34,13 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     getItems();
+    const data = localStorage.getItem('cart');
+    setMycart(JSON.parse(data))
   }, [])
 
   useEffect(()=>{
-    const data = localStorage.getItem('cart');
-    setMycart(JSON.parse(data))
-  },[])
+    countItems();
+  },[qty])
 
 
   const handleIncrease = (product) => {
@@ -80,20 +83,27 @@ export default function ShoppingCart() {
       
   }
 
+  const countItems = () =>{
+    const data = JSON.parse(localStorage.getItem('cart'))
+    setQty(data.length);
+  }
+
   return (
 
     <div className="main-container">
 
-      <TopNav />
+
+      <TopNav 
+      count={qty}/>
       {isPopUp &&
-      < Notification 
+      <Notification 
       message={"Do you want to remove this item from the cart?"}
-      onConfirm={()=>handleDelete(currentProductId)}
+      onConfirm={()=>{handleDelete(currentProductId);countItems()}}
       onCancel={()=>setIsPopUp(false)}
       isCart={true}
       classname={"notification-container moveDownAndStay"}
       />
-      }
+    }
 
       <div className="subtotal-box">
         <span className="subtotal-span">Subtotal</span><span className="totalprice-span">3.403.29</span>
@@ -102,7 +112,7 @@ export default function ShoppingCart() {
       <hr className='subtotal-hr' />
 
       <div className="checkout-container">
-        <button className='checkout-btn'>Proceed to Checkout(4items) </button>
+        <span className='checkout-btn'>Proceed to Checkout<span className="quantity-span">&nbsp;({qty} items)</span> </span>
       </div>
 
       <hr className='checkout-hr' />
@@ -110,7 +120,6 @@ export default function ShoppingCart() {
       <div className="gift-message">
         <input type="checkbox"></input>
         <span>Send as a gift. Include custom message</span>
-        <button onClick={()=>console.log(JSON.parse(localStorage.getItem('cart')))}>play</button>
       </div>
 
       <hr className='item-hr' />
@@ -129,7 +138,7 @@ export default function ShoppingCart() {
             }
             
           }
-      })}      
+        })}      
     </div>
   )
 }

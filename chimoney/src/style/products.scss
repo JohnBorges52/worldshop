@@ -1,12 +1,11 @@
 .products-main-container{
   min-height: 100vh;
-  background-color: antiquewhite;
+  background-color: rgb(253, 231, 227);
 
 
   .products-browser-container{
     width: 90%;
     margin: 0 auto;
-    background-color: rgb(253, 245, 234);
   }
 
 .pagination-container{
@@ -14,7 +13,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 15px;
-  padding: 15px 0;
+  padding: 15px 0 30px 0;
 
 }
 

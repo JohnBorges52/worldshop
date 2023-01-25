@@ -7,6 +7,8 @@ import Notification from './Notification';
 
 import ItemContainer from './ItemContainer';
 import TopNav from './TopNav';
+import ShoppingCart from './ShoppingCart';
+import SideCart from './SideCart';
 
 
 export default function Products() {
@@ -20,6 +22,7 @@ export default function Products() {
   })
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(0)
+  const [isCart, setIsCart] =useState(false)
   
 
 
@@ -78,6 +81,8 @@ export default function Products() {
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
 }
 
+
+
 const countItems = () =>{
   const data = JSON.parse(localStorage.getItem('cart'))
   setQty(data.length)
@@ -111,7 +116,9 @@ const addNotification = () => {
       isCart={false}
       classname={"notification-container"}
       />
-    
+      {!isCart &&
+    <SideCart />
+      }
 
     {items.map((element, index) => {
         if (index >= range.initial && index <= range.final) {
@@ -126,7 +133,7 @@ const addNotification = () => {
             type={element.type} 
             country={element.country.name} 
             redeem={element.description} 
-            addItem={()=> {addItem(element.productId, element.name, 1); addNotification()}} 
+            addItem={()=> {addItem(element.productId, element.name, 1); addNotification();countItems()}} 
             onDelete={()=> {console.log(shoppingCart)}}
             productPage={true}
             />

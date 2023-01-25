@@ -58,13 +58,13 @@
 
 @keyframes moveDown {
   
-  0%   {  transform:  translateY(0); }
-  15%   { transform: translateY(220px); position: fixed }
-  55%   { opacity: 1; transform: translateY(220px); position: fixed }
-  100%   { opacity: 0;transform: translateY(-220px); }
+  0%   {  transform:  translateY(0); width: 100%; }
+  15%   { transform: translateY(160px); position: fixed }
+  55%   { opacity: 1; transform: translateY(160px);  position: fixed;  }
+  100%   { opacity: 0;transform: translateY(-160px)}
 }
 
 @keyframes moveDownAndStay {
   0%   {  transform:  translateY(0); }
-  100%   { transform: translateY(220px);position: fixed }
+  100%   { transform: translateY(220px); position: fixed; }
 }

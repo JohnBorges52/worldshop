@@ -43,21 +43,21 @@ export default function ItemContainer(props) {
 
           {!props.productPage && 
           <div className="quantity-container">
-            <button className='increase-count'onClick={props.onDecrease}>-</button>
+            <button className='decrease-count'onClick={props.onDecrease}>-</button>
             <div className='item-count'>{props.quantity}</div>            
-            <button className='decrease-count' onClick={props.onIncrease}>+</button>
+            <button className='increase-count' onClick={props.onIncrease}>+</button>
           </div>  
           }
 
             {props.productPage &&
-              <button className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</button>
+              <span className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</span>
             }
           </div>
 
           {!props.productPage &&
           <div className="delete-item-box" >
             
-            <button className='delete-item' onClick={props.onDelete}>Delete</button>
+            <span className='delete-item' onClick={props.onDelete}>Delete</span>
           </div>
           } 
         </div>
