@@ -1,24 +1,37 @@
-.subtotal-box{
+.cart-main-container{
+  min-height: 100vh;
   width: 100%;
-  padding: 10px 0 0 0;
-  margin: 0 auto; ;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 665px;
+  // border: 5px solid black;
+  position: absolute;
+  right: 900px;
+  top: 90px;
+  background-color: rgb(250, 154, 44);
+  animation: slideIn .3s forwards ease-in;
 
 
-  .subtotal-span{
-    font-weight: 400;
-    font-size: .9em;
+
+  .subtotal-box{
+    width: 100%;
+    padding: 10px 0 0 0;
+    margin: 0 auto; ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
-  }
-  .totalprice-span{
-    font-weight: 600;
-    font-size: 1em;
+    
+    .subtotal-span{
+      font-weight: 400;
+      font-size: .9em;
+      
+    }
+    .totalprice-span{
+      font-weight: 600;
+      font-size: 1em;
     margin-left: 10px;
     position: relative;
-
-
+    
+    
     &::before{
       content: "$";
       font-size: .6em;
@@ -28,7 +41,7 @@
       top: 3px;
     }
   }
-
+  
 }
 .subtotal-hr{
   border: none;
@@ -41,8 +54,8 @@
   margin: 10px auto;
   display: flex;
   justify-content: center;
-
- 
+  
+  
   
   .checkout-btn{
     display: flex;
@@ -56,29 +69,29 @@
     border-radius: 5px;
     color: rgb(94, 94, 94);
     cursor: pointer;
-
+    
     .quantity-span{
       color: white;
       font-weight: 300;
-
+      
     }
-
+    
     &:hover {
       background-color: rgb(253, 188, 48) ;
       color: rgb(36, 36, 36);
       .quantity-span{
         font-weight: 400;
-
+        
       }
     }
-
+    
   }
 }
 .checkout-hr{
   border: none;
   border-top: 1px solid rgb(255, 193, 58);
-
-
+  
+  
 }
 
 .gift-message{
@@ -89,23 +102,30 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 10px auto;
-
+  
   input{
     width: 20px;
     height: 20px;
-
+    
   }
-
+  
   span{
     font-size: 0.8em;
     font-weight: 300;
-
+    
   }
 }
 
 .item-hr{
   border: none;
   border-top: 1px solid rgb(119, 119, 119);
+}
+}
+
+
+@keyframes slideIn{
+  0%{transform: translateX(1800px);}
+  100%{transform: translateX(900px);}
 }
 
 

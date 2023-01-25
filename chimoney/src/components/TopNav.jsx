@@ -6,7 +6,7 @@ export default function TopNav(props) {
     <div className='top-nav'>
       <ul>
         <li className='WorldShop'>WorldShop</li>
-        <li>Products</li>
+        <li onClick={props.x}>Products</li>
         <li><div className='cart-img' onClick={props.click}> <span className='cart-count'>{props.count}</span></div></li>
        
       </ul>

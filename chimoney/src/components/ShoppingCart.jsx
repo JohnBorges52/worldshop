@@ -90,11 +90,11 @@ export default function ShoppingCart() {
 
   return (
 
-    <div className="main-container">
+    <div className="cart-main-container">
 
 
-      <TopNav 
-      count={qty}/>
+      {/* <TopNav 
+      count={qty}/> */}
       {isPopUp &&
       <Notification 
       message={"Do you want to remove this item from the cart?"}
@@ -112,7 +112,7 @@ export default function ShoppingCart() {
       <hr className='subtotal-hr' />
 
       <div className="checkout-container">
-        <span className='checkout-btn'>Proceed to Checkout<span className="quantity-span">&nbsp;({qty} items)</span> </span>
+        <span className='checkout-btn' >Proceed to Checkout<span className="quantity-span">&nbsp;({qty} items)</span> </span>
       </div>
 
       <hr className='checkout-hr' />

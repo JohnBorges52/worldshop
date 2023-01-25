@@ -104,10 +104,13 @@ const addNotification = () => {
 
   return (
     <div className='products-main-container'>
+      {isCart && 
+      <ShoppingCart />
+      }
       <TopNav 
       count={qty}
-
-      click={()=>{countItems()}}
+      click={()=>{setIsCart(true)}}
+      x={()=>setIsCart(false)}
       />
     <div className='products-browser-container'>
       
@@ -116,9 +119,7 @@ const addNotification = () => {
       isCart={false}
       classname={"notification-container"}
       />
-      {!isCart &&
-    <SideCart />
-      }
+    
 
     {items.map((element, index) => {
         if (index >= range.initial && index <= range.final) {
