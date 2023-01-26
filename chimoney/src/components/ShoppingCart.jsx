@@ -9,8 +9,6 @@ import Notification from "./Notification";
 //HOOKS AND UTILITIES //
 import React, { useEffect, useState } from 'react';
 
-
-
 export default function ShoppingCart(props) {
   const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
 
@@ -21,7 +19,8 @@ export default function ShoppingCart(props) {
   const [total, setTotal] = useState(0)
   const [isPopUp, setIsPopUp] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [currentProductId, setCurrentProductId] = useState(0)
+  const [currentProductId, setCurrentProductId] = useState()
+  const [currentProductPrice, setCurrentProductPrice] = useState()
 
   //API// 
   const options = {
@@ -40,7 +39,6 @@ export default function ShoppingCart(props) {
     .catch(err => console.error(err));
   }
 
-
   //Used to set loading spinner, fetch information and count items 
   //from localstorage and states on first render.
   useEffect(() => {
@@ -58,10 +56,16 @@ export default function ShoppingCart(props) {
 
   //Used to increase quantity information to localStorage//
   const handleIncrease = (productId, price) => {
+    
     cartFromLocalStorage.map(element => {
       if(productId === element[0]){
         element[2]++
         element[3] = element[2] * price
+      }
+      if(productId === element[0] && element [2]===0){
+        element[2]++
+        element[3] = currentProductPrice
+
       }
     })
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage))
@@ -75,7 +79,6 @@ export default function ShoppingCart(props) {
       if(productId === element[0] && element[2] > 0){
         element[2]--
         element[3] = element[2] * price
-
       }
     })
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage))
@@ -91,15 +94,15 @@ export default function ShoppingCart(props) {
         break;
       }
     }
-    localStorage.setItem("cart", JSON.stringify(data))
-    setMycart(JSON.parse(localStorage.getItem('cart')))
-    setIsPopUp(false)
+    localStorage.setItem("cart", JSON.stringify(data));
+    setMycart(JSON.parse(localStorage.getItem('cart')));
+    setIsPopUp(false);
     calculateTotalSpent();
   }
 
   //Used to fetch how many items are inside teh cart//
   const countItems = () =>{
-    const data = JSON.parse(localStorage.getItem('cart'))
+    const data = JSON.parse(localStorage.getItem('cart'));
     setQty(data.length);
     
   }
@@ -112,13 +115,22 @@ export default function ShoppingCart(props) {
     setTotal(totalSpent)
   }
 
-return (
+  const deleteAtZero = (product, quantity) => {
+    if(quantity === 0 ){
+      setCurrentProductId(product)
+      setCurrentProductPrice(product)
+      setIsPopUp(true)
+    }
+  }
+
+
+  return (
   <>
       {isPopUp &&
       <Notification 
         message={"Do you want to remove this item from the cart?"}
         onConfirm={() => {handleDelete(currentProductId); countItems()}}
-        onCancel={() => setIsPopUp(false)}
+        onCancel={() => {setIsPopUp(false); console.log(currentProductPrice); handleIncrease(currentProductId, currentProductPrice) }}
         isCart={true}
         classname={"notification-container moveDownAndStay"}
       />
@@ -165,9 +177,9 @@ return (
                 soldby={element.marketplace} 
                 productPage={false} 
                 quantity={product[2]} 
-                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId); countItems(); calculateTotalSpent()}} 
-                onIncrease={()=>{handleIncrease(element.productId, element.price);calculateTotalSpent()}} 
-                onDecrease={()=>{handleDecrease(element.productId, element.price);calculateTotalSpent()}} 
+                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);setCurrentProductPrice(element.price); countItems(); calculateTotalSpent()}} 
+                onIncrease={()=>{handleIncrease(element.productId, element.price, element.price);calculateTotalSpent()}}
+                onDecrease={()=>{handleDecrease(element.productId, element.price);calculateTotalSpent(); deleteAtZero(product[0],product[2]); setCurrentProductPrice(element.price) }} 
                 />
                 )
               }
