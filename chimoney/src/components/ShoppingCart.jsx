@@ -5,7 +5,7 @@ import ItemContainer from './ItemContainer';
 import TopNav from "./TopNav";
 import Notification from "./Notification";
 
-export default function ShoppingCart() {
+export default function ShoppingCart(props) {
 
   const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
   const [items, setItems] = useState([]);
@@ -15,6 +15,8 @@ export default function ShoppingCart() {
 
   const [isPopUp, setIsPopUp] = useState(false)
   const [currentProductId, setCurrentProductId] = useState(0)
+  const [loading, setLoading] = useState(false)
+
 
   const options = {
     method: 'GET',
@@ -27,16 +29,20 @@ export default function ShoppingCart() {
   const getItems = () => {
 
     fetch('https://api.chimoney.io/v0.2/info/assets', options)
-      .then(response => response.json())
-      .then(response => setItems(response.data.giftCardsRLD.content))
-      .catch(err => console.error(err));
+    .then(response => response.json())
+    .then(response => setItems(response.data.giftCardsRLD.content))
+    .catch(err => console.error(err));
+    
+
   }
 
   useEffect(() => {
+    setLoading(true)
     getItems();
     countItems();
     const data = localStorage.getItem('cart');
     setMycart(JSON.parse(data))
+    setLoading(false)
   }, [])
 
   
@@ -105,7 +111,8 @@ export default function ShoppingCart() {
     }
 
       <div className="subtotal-box">
-        <span className="subtotal-span">Subtotal</span><span className="totalprice-span">3.403.29</span>
+        <span className="subtotal-span"> Subtotal</span><span className="totalprice-span">3.403.29</span>
+        <span className="close-cart-btn" onClick={props.closeCart}>&#215;</span>
       </div>
 
       <hr className='subtotal-hr' />
@@ -122,6 +129,9 @@ export default function ShoppingCart() {
       </div>
 
       <hr className='item-hr' />
+      {!loading && 
+        <div className="loading-icon"></div>
+      }
 
       {items.map((element) => {
         if(cartFromLocalStorage.length !== 0){
@@ -131,7 +141,6 @@ export default function ShoppingCart() {
                 <ItemContainer key={element.productId} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} quantity={product[2]} 
                 onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);}} 
                 onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=> handleDecrease(element.productId)}  />
-                
                 )
               }
             }

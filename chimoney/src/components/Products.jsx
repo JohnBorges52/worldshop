@@ -23,6 +23,8 @@ export default function Products() {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(0)
   const [isCart, setIsCart] =useState(false)
+  const [loading, setLoading] = useState(false)
+
   
 
 
@@ -41,11 +43,16 @@ export default function Products() {
   };
 
   const getItems = () => {
-
+    setLoading(true)
     fetch('https://api.chimoney.io/v0.2/info/assets', options)
       .then(response => response.json())
       .then(response => setItems(response.data.giftCardsRLD.content))
+      .then(()=>setLoading(false))
       .catch(err => console.error(err));
+
+
+    
+
   }
 
   useEffect(() => {
@@ -128,10 +135,13 @@ const removeBlur = () => {
       <TopNav 
       count={qty}
       click={()=>{setIsCart(true); Addblur(); window.scrollTo(0, 0)}}
-      close={()=>{setIsCart(false);removeBlur()}}
+      
       />
       {isCart && 
-      <ShoppingCart />
+      <ShoppingCart 
+      closeCart={()=>{removeBlur();setIsCart(false)}}
+      
+      />
       }
     <div className='products-main-container' id='on-blur'>
       <div className='products-browser-container'>
@@ -141,7 +151,9 @@ const removeBlur = () => {
       isCart={false}
       classname={"notification-container"}
       />
-    
+    {loading && 
+        <div className="loading-icon"></div>
+      }
 
     {items.map((element, index) => {
       if (index >= range.initial && index <= range.final) {
