@@ -1,39 +1,42 @@
-import React from 'react';
+//STYLE IMPORTS //
 import "../style/products.scss";
-import  { useEffect, useState } from 'react';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import Notification from './Notification';
 
+// COMPONENTS IMPORTS //
+import Pagination from '@mui/material/Pagination';
+import Notification from './Notification';
 import ItemContainer from './ItemContainer';
 import TopNav from './TopNav';
 import ShoppingCart from './ShoppingCart';
-import SideCart from './SideCart';
+
+//HOOKS AND UTILITIES //
+import React from 'react';
+import  { useEffect, useState } from 'react';
+import Stack from '@mui/material/Stack';
+import axios from 'axios';
 
 
 export default function Products() {
-
   const pageSize = 15;
+
+  //STATES//
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [range, setRange] = useState({
     initial: 1,
-    final: 15
-  })
+    final: 15})
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(0)
   const [isCart, setIsCart] =useState(false)
   const [loading, setLoading] = useState(false)
 
   
-
-
+  //Used to handle changes on Pagination//
   const handleChange = (event, value) => {
     setCurrentPage(value);
     setRange({initial:((value * pageSize)-pageSize - 1), final: value * pageSize})
-    
   };
 
+   //API// 
   const options = {
     method: 'GET',
     headers: {
@@ -42,19 +45,15 @@ export default function Products() {
     }
   };
 
+  //Used to Fetch information from the API //
   const getItems = () => {
-    setLoading(true)
     fetch('https://api.chimoney.io/v0.2/info/assets', options)
-      .then(response => response.json())
-      .then(response => setItems(response.data.giftCardsRLD.content))
-      .then(()=>setLoading(false))
-      .catch(err => console.error(err));
-
-
-    
-
+    .then(response => response.json())
+    .then(response => setItems(response.data.ecommerce))
+    .catch(err => console.error(err));
   }
 
+  //Used to update state and localStorage on load //
   useEffect(() => {
     const data = localStorage.getItem('cart');
     if(data){
@@ -67,18 +66,22 @@ export default function Products() {
 
 
 
+//Used for show cart count and after changing the shopping cart//
 useEffect(()=>{
   localStorage.setItem("cart", JSON.stringify(shoppingCart))
   countItems();
 },[shoppingCart])
 
 
-  const addItem = (itemId, itemName, itemQuantity) => {
-    
-    const product = [itemId, itemName, itemQuantity]
-    if(shoppingCart.length === 0){
-      setShoppingCart([...shoppingCart, product])
-    } else{
+//Used to add Item to the cart//
+//Basically get the select item information from the API using productID
+//and add it to the cart. Also update localstorage quantity.
+  const addItem = (itemId, itemName, itemQuantity, itemPrice) => {
+    const product = [itemId, itemName, itemQuantity, itemPrice]
+      
+      if(shoppingCart.length === 0){
+        setShoppingCart([...shoppingCart, product])
+      } else{
       const isInside = shoppingCart.filter(item => item[0] === itemId);
       if(isInside.length === 0){
         setShoppingCart([...shoppingCart, product])
@@ -86,22 +89,24 @@ useEffect(()=>{
         shoppingCart.map(element => {
           if(element[0] === itemId){
             element[2]++
+            element[3] = itemPrice *= element[2]
           }
         })
       }
     }
+  
     localStorage.setItem("cart", JSON.stringify(shoppingCart))
-    console.log("cart:" ,JSON.parse(localStorage.getItem('cart')))
-    console.log("ShoppingCar:", shoppingCart)
 }
 
-
-
+//Used to show how many items are inside the shopping cart//
 const countItems = () =>{
   const data = JSON.parse(localStorage.getItem('cart'))
   setQty(data.length)
 }
 
+//Used to show pop up notification after add a new item to the car.
+//Also resets the notification pop up if user tries to different
+//items in a short period of time. 
 const addNotification = () => {
   const element = document.getElementById("animation");
   if(element.classList.contains("animationBounce")){
@@ -109,13 +114,14 @@ const addNotification = () => {
     setInterval(()=>{
       element.classList.add("animationBounce");
     },20)
-
   } else{
     element.classList.add("animationBounce");
   }
 }
 
 
+//Used to add blur and brightness filters to the main container 
+//as well as remove scrollbar when user opens the cart component.
 const Addblur = () =>{
   const element = document.getElementById("on-blur");
   const bodyElement = document.getElementById("noScroll");
@@ -125,6 +131,8 @@ const Addblur = () =>{
   }
 }
 
+//Used to remove blur and brightness filters from the main container 
+//as well as allow scrollbar when user closes the cart componen.
 const removeBlur = () => {
   const bodyElement = document.getElementById("noScroll");
   const element = document.getElementById("on-blur");
@@ -135,60 +143,72 @@ const removeBlur = () => {
   }
 }
 
-  return (
-    <>
-      <TopNav 
-      count={qty}
-      click={()=>{setIsCart(true); Addblur(); window.scrollTo(0, 0)}}
-      
-      />
-      {isCart && 
-      <ShoppingCart 
-      closeCart={()=>{removeBlur();setIsCart(false)}}
-      
-      />
-      }
-    <div className='products-main-container' id='on-blur'>
-      <div className='products-browser-container'>
-      
+
+//still need to be done//
+const scaleContainer = ()=>{
+  const element = document.getElementById("scale-up");
+  element.classList.add("scale-up");
+}
+
+return (
+  <>
+    <TopNav
+    count={qty}
+    click={()=>{setIsCart(true); Addblur(); window.scrollTo(0, 0)}}
+  />
+  {isCart && 
+    <ShoppingCart 
+    closeCart={()=>{removeBlur();setIsCart(false)}}
+    />
+    }
+  <div className='products-main-container' id='on-blur'>
+    <div className='products-browser-container'>
       <Notification 
-      message={"You added this item to your cart"}
-      isCart={false}
-      classname={"notification-container"}
+        message={"You added this item to your cart"}
+        isCart={false}
+        classname={"notification-container"}
       />
     {loading && 
-        <div className="loading-icon"></div>
-      }
+      <div className="loading-icon"></div>
+    }
 
-    {items.map((element, index) => {
-      if (index >= range.initial && index <= range.final) {
-        return (
-          <ItemContainer 
+  {items
+  .filter((item => item.category.includes("Gift Cards")))
+  .map((element, index) => {
+    if (index >= range.initial && index <= range.final)  {
+      return (
+        <ItemContainer 
           key={element.productId} 
-          image={element.img} 
-          imgalt={element.name} 
-          description={element.productName} 
-          price={element.senderFee} 
-          currency={element.senderCurrencyCode} 
-          type={element.type} 
-          country={element.country.name} 
-          redeem={element.description} 
-          addItem={()=> {addItem(element.productId, element.name, 1); addNotification();countItems()}} 
+          image={element.thumbnail} 
+          imgalt={element.name}
+          description={element.name} 
+          price={element.price} 
+          currency={element.currency} 
+          type={element.category} 
+          // country={element.country.name} 
+          // redeem={element.description} 
+          addItem={()=> {addItem(element.productId, element.name, 1, element.price); addNotification(); countItems()}} 
           onDelete={()=> {console.log(shoppingCart)}}
           productPage={true}
-          />
-          )
-        }
-      })}
-    </div>
+          resize={()=>{scaleContainer()}}
+        />
+        )
+      }
+    })}
+  </div>
 
-<div className='pagination-container'>
-      <Stack spacing={2}>
-        <Pagination count={Math.ceil(items.length / pageSize)} size="normal" color="secondary" page={currentPage} onChange={handleChange}/>
-      </Stack>
-
-      </div>
-    </div>
-    </>
-    )
+  <div className='pagination-container'>
+    <Stack spacing={2}>
+      <Pagination 
+        count={Math.ceil(items.length / pageSize)} 
+        size="normal" 
+        color="secondary" 
+        page={currentPage} 
+        onChange={handleChange}
+      />
+    </Stack>
+  </div>
+</div>
+</>
+)
 }

@@ -3,6 +3,7 @@ import "../style/notification.scss";
 
 
 export default function Notification(props) {
+  
   return (
     <div className={props.classname} id='animation'>
 

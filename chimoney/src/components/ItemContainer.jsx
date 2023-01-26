@@ -1,19 +1,14 @@
 
 import '../style/ItemContainer.scss'
 
-
-
-
-
 export default function ItemContainer(props) {
 
-
   return (
-    <div className="item-container">
+    <div className="item-container" id='scale-up' onClick={props.resize}>
       <div className="top-container">
         <div className="left-side-box">
           <div className="item-img-container">
-            <img className="item-img" src={props.image} alt={props.imgalt} />
+            <img className="item-img" src={props.image} alt={props.imgalt}  />
           </div>
         </div>
         <div className="right-size-box">
@@ -27,20 +22,16 @@ export default function ItemContainer(props) {
           <div className="item-type-box">
             <span>{props.type}</span>
           </div>
-
           <div className="country-box">
             <span>{props.country}</span>
-            
           </div>
           <div className='redeem-box'>
             <span>{props.redeem}</span>
           </div>
-
         </div>
-  </div>
+        </div>
         <div className='bottom-box'>
           <div className='quantity-add-action'>
-
           {!props.productPage && 
           <div className="quantity-container">
             <button className='decrease-count'onClick={props.onDecrease}>-</button>
@@ -48,15 +39,12 @@ export default function ItemContainer(props) {
             <button className='increase-count' onClick={props.onIncrease}>+</button>
           </div>  
           }
-
             {props.productPage &&
               <span className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</span>
             }
           </div>
-
           {!props.productPage &&
           <div className="delete-item-box" >
-            
             <span className='delete-item' onClick={props.onDelete}>Delete</span>
           </div>
           } 

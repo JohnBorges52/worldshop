@@ -1,23 +1,28 @@
+//STYLE IMPORTS //
 import "../style/index.css"
 import '../style/shoppingCart.scss';
-import React, { useEffect, useState } from 'react';
+
+// COMPONENTS IMPORTS //
 import ItemContainer from './ItemContainer';
-import TopNav from "./TopNav";
 import Notification from "./Notification";
 
+//HOOKS AND UTILITIES //
+import React, { useEffect, useState } from 'react';
+
+
+
 export default function ShoppingCart(props) {
-
   const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
-  const [items, setItems] = useState([]);
+
+  //STATES//
   const[ mycart, setMycart] = useState(cartFromLocalStorage)
+  const [items, setItems] = useState([]);
   const [qty, setQty] = useState(0)
-
-
   const [isPopUp, setIsPopUp] = useState(false)
-  const [currentProductId, setCurrentProductId] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [currentProductId, setCurrentProductId] = useState(0)
 
-
+  //API// 
   const options = {
     method: 'GET',
     headers: {
@@ -26,16 +31,17 @@ export default function ShoppingCart(props) {
     }
   };
 
+  //Used to Fetch information from the API //
   const getItems = () => {
-
     fetch('https://api.chimoney.io/v0.2/info/assets', options)
     .then(response => response.json())
     .then(response => setItems(response.data.giftCardsRLD.content))
     .catch(err => console.error(err));
-    
-
   }
 
+
+  //Used to set loading spinner, fetch information and count items 
+  //from localstorage and states on first render.
   useEffect(() => {
     setLoading(true)
     getItems();
@@ -45,13 +51,10 @@ export default function ShoppingCart(props) {
     setLoading(false)
   }, [])
 
-  
 
-
+  //Used to increase quantity information to localStorage//
   const handleIncrease = (product) => {
-
     cartFromLocalStorage.map(element => {
-
       if(product === element[0]){
         element[2]++
       }
@@ -60,6 +63,7 @@ export default function ShoppingCart(props) {
     setMycart(JSON.parse(localStorage.getItem('cart')))
   }
 
+  //Used to decrease quantity information to localStorage//
   const handleDecrease = (product) => {
     cartFromLocalStorage.map(element => {
 
@@ -71,45 +75,38 @@ export default function ShoppingCart(props) {
     setMycart(JSON.parse(localStorage.getItem('cart')))
   }
 
+  //Used to delete an item from shopping cart and update localStorage//
   const handleDelete = (product) => {
     let data = JSON.parse(localStorage.getItem('cart'));
-    
-    console.log("1",data)
     for (let i = 0; i < data.length; i++) {
       if(data[i][0] === product){
         data.splice(i,1);
         break;
       }
-
     }
     localStorage.setItem("cart", JSON.stringify(data))
     setMycart(JSON.parse(localStorage.getItem('cart')))
     setIsPopUp(false)
-      
   }
 
+  //Used to fetch how many items are inside teh cart//
   const countItems = () =>{
     const data = JSON.parse(localStorage.getItem('cart'))
     setQty(data.length);
   }
 
-  return (
-
-    <div className="cart-main-container">
-
-
-      {/* <TopNav 
-      count={qty}/> */}
+return (
+  <>
       {isPopUp &&
       <Notification 
-      message={"Do you want to remove this item from the cart?"}
-      onConfirm={()=>{handleDelete(currentProductId);countItems()}}
-      onCancel={()=>setIsPopUp(false)}
-      isCart={true}
-      classname={"notification-container moveDownAndStay"}
+        message={"Do you want to remove this item from the cart?"}
+        onConfirm={() => {handleDelete(currentProductId); countItems()}}
+        onCancel={() => setIsPopUp(false)}
+        isCart={true}
+        classname={"notification-container moveDownAndStay"}
       />
     }
-
+    <div className="cart-main-container">
       <div className="subtotal-box">
         <span className="subtotal-span"> Subtotal</span><span className="totalprice-span">3.403.29</span>
         <span className="close-cart-btn" onClick={props.closeCart}>&#215;</span>
@@ -129,24 +126,35 @@ export default function ShoppingCart(props) {
       </div>
 
       <hr className='item-hr' />
+
       {(!loading && qty > 0)&& 
         <div className="loading-icon"></div>
       }
-
       {items.map((element) => {
         if(cartFromLocalStorage.length !== 0){
           for(let product of cartFromLocalStorage){
             if(element.productId === product[0]){
               return (
-                <ItemContainer key={element.productId} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} quantity={product[2]} 
-                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);countItems()}} 
-                onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=> handleDecrease(element.productId)}  />
+                <ItemContainer 
+                  key={element.productId} 
+                  image={element.img} imgalt={element.name} 
+                  description={element.productName} 
+                  price={element.senderFee} 
+                  currency={element.senderCurrencyCode} 
+                  type={element.type} 
+                  country={element.country.name} 
+                  redeem={element.description} 
+                  quantity={product[2]} 
+                  onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId); countItems()}} 
+                  onIncrease={()=>{handleIncrease(element.productId)}} 
+                  onDecrease={()=> handleDecrease(element.productId)}  
+                />
                 )
               }
             }
-            
           }
         })}      
     </div>
+  </>
   )
 }

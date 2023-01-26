@@ -17,7 +17,11 @@
   background-color: rgb(118, 223, 108) ;
   box-shadow: 5px 10px 30px -3px #8d8d8d;
   text-align: center;
-  z-index: 5;
+  z-index: 7;
+
+  .notification-{
+
+  }
 
   span{
     color: white;
@@ -53,7 +57,7 @@
 }
 
 .moveDownAndStay{
-  animation: moveDownAndStay .3s ease forwards ;
+  animation: moveDownAndStay .3s ease forwards;
 }
 
 @keyframes moveDown {
@@ -65,6 +69,6 @@
 }
 
 @keyframes moveDownAndStay {
-  0%   {  transform:  translateY(0); }
-  100%   { transform: translateY(155px); }
+  0%   {  transform:  translateY(0);  }
+  100%   { transform: translateY(175px);position: fixed;  }
 }
