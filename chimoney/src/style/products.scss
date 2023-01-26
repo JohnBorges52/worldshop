@@ -2,16 +2,11 @@
   min-height: 100vh;
   background-color: rgb(253, 231, 227);
   padding-top: 100px;
-
   
 
   .products-browser-container{
     width: 90%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
-    grid-gap: 0;
-    }
+  }
 
 .pagination-container{
   display: flex;
@@ -43,9 +38,22 @@
   overflow-y: hidden;
 }
 
-// @media (max-width:850px) {
-//   .products-browser-container{
-//     grid-template-columns: repeat(2, 1fr);
+@media (max-width:849px) {
+  .products-browser-container{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    }
 
-//   }
-// }
+
+}
+@media (min-width:850px) {
+  .products-browser-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    justify-content: center;
+    grid-gap: 0 1em;
+    margin: 0 auto;
+  }
+}

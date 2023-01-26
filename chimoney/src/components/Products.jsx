@@ -15,14 +15,14 @@ import Stack from '@mui/material/Stack';
 
 
 export default function Products() {
-  const pageSize = 15;
+  const pageSize = 16;
 
   //STATES//
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [range, setRange] = useState({
     initial: 1,
-    final: 14})
+    final: 15})
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(0)
   const [isCart, setIsCart] =useState(false)
