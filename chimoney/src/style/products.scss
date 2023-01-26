@@ -8,7 +8,10 @@
   .products-browser-container{
     width: 90%;
     margin: 0 auto;
-  }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    grid-gap: 0;
+    }
 
 .pagination-container{
   display: flex;
@@ -39,3 +42,10 @@
 .overflowY-zero{
   overflow-y: hidden;
 }
+
+// @media (max-width:850px) {
+//   .products-browser-container{
+//     grid-template-columns: repeat(2, 1fr);
+
+//   }
+// }

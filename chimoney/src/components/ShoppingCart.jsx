@@ -18,6 +18,7 @@ export default function ShoppingCart(props) {
   const[ mycart, setMycart] = useState(cartFromLocalStorage)
   const [items, setItems] = useState([]);
   const [qty, setQty] = useState(0)
+  const [total, setTotal] = useState(0)
   const [isPopUp, setIsPopUp] = useState(false)
   const [loading, setLoading] = useState(false)
   const [currentProductId, setCurrentProductId] = useState(0)
@@ -35,7 +36,7 @@ export default function ShoppingCart(props) {
   const getItems = () => {
     fetch('https://api.chimoney.io/v0.2/info/assets', options)
     .then(response => response.json())
-    .then(response => setItems(response.data.giftCardsRLD.content))
+    .then(response => setItems(response.data.ecommerce))
     .catch(err => console.error(err));
   }
 
@@ -51,12 +52,16 @@ export default function ShoppingCart(props) {
     setLoading(false)
   }, [])
 
+  useEffect(()=>{
+    calculateTotalSpent();
+  },[total])
 
   //Used to increase quantity information to localStorage//
-  const handleIncrease = (product) => {
+  const handleIncrease = (productId, price) => {
     cartFromLocalStorage.map(element => {
-      if(product === element[0]){
+      if(productId === element[0]){
         element[2]++
+        element[3] = element[2] * price
       }
     })
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage))
@@ -64,11 +69,13 @@ export default function ShoppingCart(props) {
   }
 
   //Used to decrease quantity information to localStorage//
-  const handleDecrease = (product) => {
+  const handleDecrease = (productId, price) => {
     cartFromLocalStorage.map(element => {
 
-      if(product === element[0] && element[2] > 0){
+      if(productId === element[0] && element[2] > 0){
         element[2]--
+        element[3] = element[2] * price
+
       }
     })
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage))
@@ -87,12 +94,22 @@ export default function ShoppingCart(props) {
     localStorage.setItem("cart", JSON.stringify(data))
     setMycart(JSON.parse(localStorage.getItem('cart')))
     setIsPopUp(false)
+    calculateTotalSpent();
   }
 
   //Used to fetch how many items are inside teh cart//
   const countItems = () =>{
     const data = JSON.parse(localStorage.getItem('cart'))
     setQty(data.length);
+    
+  }
+
+  const calculateTotalSpent = () =>{
+    let totalSpent = 0
+    JSON.parse(localStorage.getItem('cart')).map(element => {
+      totalSpent += element[3]
+    })
+    setTotal(totalSpent)
   }
 
 return (
@@ -108,7 +125,7 @@ return (
     }
     <div className="cart-main-container">
       <div className="subtotal-box">
-        <span className="subtotal-span"> Subtotal</span><span className="totalprice-span">3.403.29</span>
+        <span className="subtotal-span"> Subtotal</span><span className="totalprice-span">{total}</span>
         <span className="close-cart-btn" onClick={props.closeCart}>&#215;</span>
       </div>
 
@@ -130,24 +147,27 @@ return (
       {(!loading && qty > 0)&& 
         <div className="loading-icon"></div>
       }
-      {items.map((element) => {
+      {items
+      .filter((item => item.category.includes("Gift Cards")))
+      .map((element) => {
         if(cartFromLocalStorage.length !== 0){
           for(let product of cartFromLocalStorage){
             if(element.productId === product[0]){
               return (
                 <ItemContainer 
-                  key={element.productId} 
-                  image={element.img} imgalt={element.name} 
-                  description={element.productName} 
-                  price={element.senderFee} 
-                  currency={element.senderCurrencyCode} 
-                  type={element.type} 
-                  country={element.country.name} 
-                  redeem={element.description} 
-                  quantity={product[2]} 
-                  onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId); countItems()}} 
-                  onIncrease={()=>{handleIncrease(element.productId)}} 
-                  onDecrease={()=> handleDecrease(element.productId)}  
+                key={element.productId} 
+                image={element.thumbnail} 
+                imgalt={element.name}
+                name={element.name} 
+                price={element.price} 
+                currency={element.currency} 
+                category={element.category} 
+                soldby={element.marketplace} 
+                productPage={false} 
+                quantity={product[2]} 
+                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId); countItems(); calculateTotalSpent()}} 
+                onIncrease={()=>{handleIncrease(element.productId, element.price);calculateTotalSpent()}} 
+                onDecrease={()=>{handleDecrease(element.productId, element.price);calculateTotalSpent()}} 
                 />
                 )
               }

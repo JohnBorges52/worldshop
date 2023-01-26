@@ -12,7 +12,6 @@ import ShoppingCart from './ShoppingCart';
 import React from 'react';
 import  { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import axios from 'axios';
 
 
 export default function Products() {
@@ -23,7 +22,7 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1);
   const [range, setRange] = useState({
     initial: 1,
-    final: 15})
+    final: 14})
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(0)
   const [isCart, setIsCart] =useState(false)
@@ -33,7 +32,7 @@ export default function Products() {
   //Used to handle changes on Pagination//
   const handleChange = (event, value) => {
     setCurrentPage(value);
-    setRange({initial:((value * pageSize)-pageSize - 1), final: value * pageSize})
+    setRange({initial:((value * pageSize)- pageSize +1 ), final: value * pageSize -1})
   };
 
    //API// 
@@ -47,10 +46,13 @@ export default function Products() {
 
   //Used to Fetch information from the API //
   const getItems = () => {
+    setLoading(true)
     fetch('https://api.chimoney.io/v0.2/info/assets', options)
     .then(response => response.json())
     .then(response => setItems(response.data.ecommerce))
+    .then(()=>setLoading(false))
     .catch(err => console.error(err));
+    
   }
 
   //Used to update state and localStorage on load //
@@ -162,31 +164,31 @@ return (
     />
     }
   <div className='products-main-container' id='on-blur'>
+      {loading && 
+        <div className="loading-icon"></div>
+      }
     <div className='products-browser-container'>
       <Notification 
         message={"You added this item to your cart"}
         isCart={false}
         classname={"notification-container"}
       />
-    {loading && 
-      <div className="loading-icon"></div>
-    }
 
   {items
   .filter((item => item.category.includes("Gift Cards")))
   .map((element, index) => {
-    if (index >= range.initial && index <= range.final)  {
+    if (index +1 >= range.initial && index <= range.final)  {
       return (
         <ItemContainer 
           key={element.productId} 
           image={element.thumbnail} 
           imgalt={element.name}
-          description={element.name} 
+          name={element.name} 
           price={element.price} 
           currency={element.currency} 
-          type={element.category} 
-          // country={element.country.name} 
-          // redeem={element.description} 
+          category={element.category} 
+          soldby={element.marketplace} 
+          type={element.category}
           addItem={()=> {addItem(element.productId, element.name, 1, element.price); addNotification(); countItems()}} 
           onDelete={()=> {console.log(shoppingCart)}}
           productPage={true}
@@ -200,7 +202,7 @@ return (
   <div className='pagination-container'>
     <Stack spacing={2}>
       <Pagination 
-        count={Math.ceil(items.length / pageSize)} 
+        count={Math.ceil(items.filter((item => item.category.includes("Gift Cards"))).length / pageSize)} 
         size="normal" 
         color="secondary" 
         page={currentPage} 
