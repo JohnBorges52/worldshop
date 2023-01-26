@@ -53,7 +53,7 @@
 }
 
 .moveDownAndStay{
-  animation: moveDownAndStay 2s ease forwards ;
+  animation: moveDownAndStay .3s ease forwards ;
 }
 
 @keyframes moveDown {
@@ -61,10 +61,10 @@
   0%   {  transform:  translateY(0);  }
   15%   { transform: translateY(160px); position: fixed }
   55%   { opacity: 1; transform: translateY(160px);  position: fixed;  }
-  100%   { opacity: 0;transform: translateY(-160px)}
+  100%  { opacity: 0; transform: translateY(-160px)}
 }
 
 @keyframes moveDownAndStay {
   0%   {  transform:  translateY(0); }
-  100%   { transform: translateY(220px); position: fixed; }
+  100%   { transform: translateY(155px); }
 }

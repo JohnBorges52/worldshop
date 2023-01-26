@@ -117,16 +117,21 @@ const addNotification = () => {
 
 
 const Addblur = () =>{
-  const element = document.getElementById("on-blur")
+  const element = document.getElementById("on-blur");
+  const bodyElement = document.getElementById("noScroll");
   if(!element.classList.contains("blur-container") && !isCart){
     element.classList.add("blur-container");
+    bodyElement.classList.add("overflowY-zero");
   }
 }
 
 const removeBlur = () => {
-  const element = document.getElementById("on-blur")
+  const bodyElement = document.getElementById("noScroll");
+  const element = document.getElementById("on-blur");
   if(element.classList.contains("blur-container") && isCart) {
     element.classList.remove("blur-container");
+    countItems()
+    bodyElement.classList.remove("overflowY-zero");
   }
 }
 

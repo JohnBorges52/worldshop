@@ -3,6 +3,7 @@
   background-color: rgb(253, 231, 227);
   padding-top: 100px;
 
+  
 
   .products-browser-container{
     width: 90%;
@@ -23,7 +24,6 @@
 .blur-container{
   filter: brightness(25%) blur(5px);
   pointer-events: none;
- 
 }
 
 .loading-icon{
@@ -34,5 +34,8 @@
   background-repeat: no-repeat;
   background-position: center;
   animation: rotation .6s linear infinite;
+}
 
+.overflowY-zero{
+  overflow-y: hidden;
 }

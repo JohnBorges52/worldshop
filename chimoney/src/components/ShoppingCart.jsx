@@ -125,11 +125,11 @@ export default function ShoppingCart(props) {
 
       <div className="gift-message">
         <input type="checkbox"></input>
-        <span>Send as a gift. Include custom message</span>
+        <span>Delete all Items. Delete every item in teh cart</span>
       </div>
 
       <hr className='item-hr' />
-      {!loading && 
+      {(!loading && qty > 0)&& 
         <div className="loading-icon"></div>
       }
 
@@ -139,7 +139,7 @@ export default function ShoppingCart(props) {
             if(element.productId === product[0]){
               return (
                 <ItemContainer key={element.productId} image={element.img} imgalt={element.name} description={element.productName} price={element.senderFee} currency={element.senderCurrencyCode} type={element.type} country={element.country.name} redeem={element.description} quantity={product[2]} 
-                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);}} 
+                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);countItems()}} 
                 onIncrease={()=>{handleIncrease(element.productId)}} onDecrease={()=> handleDecrease(element.productId)}  />
                 )
               }

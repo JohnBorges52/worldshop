@@ -7,7 +7,7 @@
   position: fixed;
   width: 100vw;
   top: 0;
-  z-index: 5;
+  z-index: 6;
 
   ul{
     margin: 0;
@@ -29,6 +29,11 @@
 
       &:hover{
         text-decoration: underline;
+      }
+
+      a{
+        text-decoration: none;
+        color: white;
       }
 
       .cart-img{
