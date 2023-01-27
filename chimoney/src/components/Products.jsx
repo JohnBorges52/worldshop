@@ -29,8 +29,7 @@ export default function Products() {
   const [isCart, setIsCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [openIncreasedBox, setOpenIncreasedBox] = useState(false)
-  const [currentOpend, setCurrentOpened] = useState([])
-
+  const [currentItem, setCurrentItem] = useState([])
   
   //Used to handle changes on Pagination//
   const handleChange = (event, value) => {
@@ -169,32 +168,45 @@ return (
     count={qty}
     click={()=>{setIsCart(true); Addblur(); window.scrollTo(0, 0)}}
   />
+   <Notification 
+        message={"You added this item to your cart"}
+        isCart={false}
+        classname={"notification-container"}
+      />
   {openIncreasedBox &&
     <IncreasedSizeBox
-      src={currentOpend[1]}
-      alt={currentOpend[2]}
-      description={currentOpend[3]}
-      currency={currentOpend[4]}
-      price={currentOpend[5]}
+      src={currentItem[1]}
+      alt={currentItem[2]}
+      description={currentItem[3]}
+      currency={currentItem[4]}
+      price={currentItem[5]}
+      add={()=>{addItem(currentItem[0],currentItem[3],1, currentItem[5]); addNotification(); countItems()}}
       close={()=>{removeBlur(); setOpenIncreasedBox(false); }}
     />
   }
   {isCart && 
     <ShoppingCart 
-    closeCart={()=>{removeBlur();setIsCart(false)}}
-    resetLocalStorage={()=>resetLocalStorage()}
+      closeCart={()=>{removeBlur();setIsCart(false)}}
+      resetLocalStorage={()=>resetLocalStorage()}
     />
     }
   <div className='products-main-container' id='on-blur'>
+  {openIncreasedBox &&
+    <IncreasedSizeBox
+      src={currentItem[1]}
+      alt={currentItem[2]}
+      description={currentItem[3]}
+      currency={currentItem[4]}
+      price={currentItem[5]}
+      add={()=>{addItem(currentItem[0],currentItem[3],1, currentItem[5])}}
+      close={()=>{removeBlur(); setOpenIncreasedBox(false); }}
+    />
+  }
       {loading && 
         <div className="loading-icon"></div>
       }
     <div className='products-browser-container'>
-      <Notification 
-        message={"You added this item to your cart"}
-        isCart={false}
-        classname={"notification-container"}
-      />
+     
 
   {items
   .filter((item => item.category.includes("Gift Cards")))
@@ -214,7 +226,7 @@ return (
           addItem={()=> {addItem(element.productId, element.name, 1, element.price); addNotification(); countItems()}} 
           onDelete={()=> {console.log(shoppingCart)}}
           productPage={true}
-          seeMore={()=> {setOpenIncreasedBox(true);  setCurrentOpened([element.productId, element.thumbnail, element.name, element.name, element.currency, element.price]);Addblur() }}
+          seeMore={()=> {setOpenIncreasedBox(true);  setCurrentItem([element.productId, element.thumbnail, element.name, element.name, element.currency, element.price]);Addblur() }}
         />
         )
       }

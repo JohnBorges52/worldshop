@@ -113,7 +113,7 @@ export default function ShoppingCart(props) {
     JSON.parse(localStorage.getItem('cart')).map(element => {
       totalSpent += element[3]
     })
-    setTotal(totalSpent)
+    setTotal(totalSpent.toFixed(2))
   }
 
   const deleteAtZero = (product, quantity) => {
@@ -127,6 +127,7 @@ export default function ShoppingCart(props) {
   const handleCheck = (event) => {
     setIsChecked(event.target.checked)
   }
+  
 
   return (
   <>
