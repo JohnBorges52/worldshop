@@ -23,12 +23,15 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    color: rgb(0, 0, 0);
+
+
     
     
     .subtotal-span{
       font-weight: 400;
       font-size: 1.1em;
-      
+      color: black;      
     }
     .close-cart-btn{
       position: absolute;
@@ -84,7 +87,7 @@
   
   a{
     text-decoration: none;
-    color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
 
   }
   
@@ -94,25 +97,23 @@
     justify-content: center;
     width: 100%;
     min-width: 263px;
-    background-color: rgb(255, 188, 45) ;
+    background-color: rgb(40, 115, 255) ;
     border: none;
     height: 40px;
     border-radius: 5px;
-    color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
     cursor: pointer;
     
     .quantity-span{
-      color: rgb(128, 124, 110);
-      font-weight: 400;
+      color: rgb(255, 255, 255);
+      font-weight: 300;
       
     }
     
     &:hover {
-      background-color: rgb(255, 184, 32) ;
-      color: rgb(0, 0, 0);
+      background-color: rgb(31, 83, 253) ;
       .quantity-span{
         font-weight: 400;
-        color: black;
         
         
       }

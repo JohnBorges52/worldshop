@@ -28,7 +28,7 @@ export default function Checkout() {
   return (
     <>
     <TopNav 
-    
+    href={"/"}
     count={qty}
       />
     <div className='checkoutmain-container'>

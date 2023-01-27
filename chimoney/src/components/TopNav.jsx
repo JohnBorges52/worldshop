@@ -7,8 +7,7 @@ export default function TopNav(props) {
       <ul>
         <li className='WorldShop'>WorldShop</li>
         <li> <a href='/'>Products</a></li>
-        <li><div className='cart-img' id='scrollup' onClick={props.click}> <span className='cart-count'>{props.count}</span></div></li>
-       
+        <li><a href={props.href}><div className='cart-img' id='scrollup' onClick={props.click}> <span className='cart-count'>{props.count}</span></div></a></li>
       </ul>
     </div>
   )
