@@ -149,7 +149,7 @@ export default function ShoppingCart(props) {
       <hr className='subtotal-hr' />
 
       <div className="checkout-container">
-        <span className='checkout-btn' onClick={()=>{console.log(isChecked)}} >Proceed to Checkout<span className="quantity-span">&nbsp;({qty} items)</span> </span>
+        <span className='checkout-btn'> <a href="/checkout"> Proceed to Checkout </a><span className="quantity-span">&nbsp;({qty} items)</span> </span>
       </div>
 
       <hr className='checkout-hr' />

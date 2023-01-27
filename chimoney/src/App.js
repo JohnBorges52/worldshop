@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import Checkout from "./components/Checkout";
 import Products from "./components/Products";
-import ShoppingCart from "./components/ShoppingCart";
 
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Products />} />
-      <Route path="/cart" element={<ShoppingCart />} />
+      <Route path="/checkout" element={<Checkout />} />
     </Routes>
 
   );
