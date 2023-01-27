@@ -10,7 +10,7 @@ import Notification from "./Notification";
 import React, { useEffect, useState } from 'react';
 
 export default function ShoppingCart(props) {
-  const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
+  let cartFromLocalStorage = JSON.parse(localStorage.getItem('cart'))
 
   //STATES//
   const[ mycart, setMycart] = useState(cartFromLocalStorage)
@@ -21,6 +21,7 @@ export default function ShoppingCart(props) {
   const [loading, setLoading] = useState(false)
   const [currentProductId, setCurrentProductId] = useState()
   const [currentProductPrice, setCurrentProductPrice] = useState()
+  const [isChecked, setIsChecked] = useState(false)
 
   //API// 
   const options = {
@@ -123,6 +124,9 @@ export default function ShoppingCart(props) {
     }
   }
 
+  const handleCheck = (event) => {
+    setIsChecked(event.target.checked)
+  }
 
   return (
   <>
@@ -144,19 +148,25 @@ export default function ShoppingCart(props) {
       <hr className='subtotal-hr' />
 
       <div className="checkout-container">
-        <span className='checkout-btn' >Proceed to Checkout<span className="quantity-span">&nbsp;({qty} items)</span> </span>
+        <span className='checkout-btn' onClick={()=>{console.log(isChecked)}} >Proceed to Checkout<span className="quantity-span">&nbsp;({qty} items)</span> </span>
       </div>
 
       <hr className='checkout-hr' />
 
       <div className="gift-message">
-        <input type="checkbox"></input>
-        <span>Delete all Items. Delete every item in teh cart</span>
-      </div>
+        <input type="checkbox" onChange={handleCheck}></input>
+        <span>Delete all Items and start from the beggining.</span>
+        </div>
+        {isChecked &&
+        <>
+        <span className="delete-all-confirmation-message">Do you really want to delete all the items?</span>
+        <span className="delete-all-confirmation" onClick={props.resetLocalStorage}>I really do!</span>
+        </>
+        }
 
       <hr className='item-hr' />
 
-      {(!loading && qty > 0)&& 
+      {(!loading && qty > 0) && 
         <div className="loading-icon"></div>
       }
       {items
@@ -167,19 +177,19 @@ export default function ShoppingCart(props) {
             if(element.productId === product[0]){
               return (
                 <ItemContainer 
-                key={element.productId} 
-                image={element.thumbnail} 
-                imgalt={element.name}
-                name={element.name} 
-                price={element.price} 
-                currency={element.currency} 
-                category={element.category} 
-                soldby={element.marketplace} 
-                productPage={false} 
-                quantity={product[2]} 
-                onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);setCurrentProductPrice(element.price); countItems(); calculateTotalSpent()}} 
-                onIncrease={()=>{handleIncrease(element.productId, element.price, element.price);calculateTotalSpent()}}
-                onDecrease={()=>{handleDecrease(element.productId, element.price);calculateTotalSpent(); deleteAtZero(product[0],product[2]); setCurrentProductPrice(element.price) }} 
+                  key={element.productId} 
+                  image={element.thumbnail} 
+                  imgalt={element.name}
+                  name={element.name} 
+                  price={element.price} 
+                  currency={element.currency} 
+                  category={element.category} 
+                  soldby={element.marketplace} 
+                  productPage={false} 
+                  quantity={product[2]} 
+                  onDelete={()=> {setIsPopUp(true); setCurrentProductId(element.productId);setCurrentProductPrice(element.price); countItems(); calculateTotalSpent()}} 
+                  onIncrease={()=>{handleIncrease(element.productId, element.price, element.price);calculateTotalSpent()}}
+                  onDecrease={()=>{handleDecrease(element.productId, element.price);calculateTotalSpent(); deleteAtZero(product[0],product[2]); setCurrentProductPrice(element.price) }} 
                 />
                 )
               }

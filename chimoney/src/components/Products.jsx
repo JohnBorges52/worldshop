@@ -146,6 +146,20 @@ const removeBlur = () => {
     countItems()
     bodyElement.classList.remove("overflowY-zero");
   }
+  if(element.classList.contains("blur-container") && openIncreasedBox) {
+    element.classList.remove("blur-container");
+    countItems()
+    bodyElement.classList.remove("overflowY-zero");
+  }
+}
+
+const resetLocalStorage = () => {
+    setShoppingCart([])
+    localStorage.setItem("cart", JSON.stringify(shoppingCart))
+    setTimeout(()=>{
+      removeBlur();
+      setIsCart(false);
+    },2000)
 }
 
 
@@ -162,12 +176,13 @@ return (
       description={currentOpend[3]}
       currency={currentOpend[4]}
       price={currentOpend[5]}
-      close={()=>{setOpenIncreasedBox(false)}}
+      close={()=>{removeBlur(); setOpenIncreasedBox(false); }}
     />
   }
   {isCart && 
     <ShoppingCart 
     closeCart={()=>{removeBlur();setIsCart(false)}}
+    resetLocalStorage={()=>resetLocalStorage()}
     />
     }
   <div className='products-main-container' id='on-blur'>
@@ -199,7 +214,7 @@ return (
           addItem={()=> {addItem(element.productId, element.name, 1, element.price); addNotification(); countItems()}} 
           onDelete={()=> {console.log(shoppingCart)}}
           productPage={true}
-          seeMore={()=> {setOpenIncreasedBox(true);  setCurrentOpened([element.productId, element.thumbnail, element.name, element.name, element.currency, element.price]) }}
+          seeMore={()=> {setOpenIncreasedBox(true);  setCurrentOpened([element.productId, element.thumbnail, element.name, element.name, element.currency, element.price]);Addblur() }}
         />
         )
       }
