@@ -4,7 +4,7 @@ import '../style/ItemContainer.scss'
 export default function ItemContainer(props) {
 
   return (
-    <div className="item-container" id='scale-up' onClick={props.resize}>
+    <div className="item-container">
       <div className="top-container">
         <div className="left-side-box">
           <div className="item-img-container">
@@ -28,7 +28,11 @@ export default function ItemContainer(props) {
        
 
           {props.productPage &&
+          <>
               <span className='add-to-cart-btn' onClick={props.addItem}>Add to Cart</span>
+              <span className='see-more' onClick={props.seeMore}>See more</span>
+              
+          </>
           }
 
         </div>

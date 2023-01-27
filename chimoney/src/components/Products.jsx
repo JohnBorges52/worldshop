@@ -12,6 +12,7 @@ import ShoppingCart from './ShoppingCart';
 import React from 'react';
 import  { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
+import IncreasedSizeBox from "./IncreasedSizeBox";
 
 
 export default function Products() {
@@ -25,8 +26,10 @@ export default function Products() {
     final: 15})
   const [shoppingCart, setShoppingCart] = useState([]);
   const [qty, setQty] = useState(0)
-  const [isCart, setIsCart] =useState(false)
+  const [isCart, setIsCart] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [openIncreasedBox, setOpenIncreasedBox] = useState(false)
+  const [currentOpend, setCurrentOpened] = useState([])
 
   
   //Used to handle changes on Pagination//
@@ -146,18 +149,22 @@ const removeBlur = () => {
 }
 
 
-//still need to be done//
-const scaleContainer = ()=>{
-  const element = document.getElementById("scale-up");
-  element.classList.add("scale-up");
-}
-
 return (
   <>
     <TopNav
     count={qty}
     click={()=>{setIsCart(true); Addblur(); window.scrollTo(0, 0)}}
   />
+  {openIncreasedBox &&
+    <IncreasedSizeBox
+      src={currentOpend[1]}
+      alt={currentOpend[2]}
+      description={currentOpend[3]}
+      currency={currentOpend[4]}
+      price={currentOpend[5]}
+      close={()=>{setOpenIncreasedBox(false)}}
+    />
+  }
   {isCart && 
     <ShoppingCart 
     closeCart={()=>{removeBlur();setIsCart(false)}}
@@ -192,7 +199,7 @@ return (
           addItem={()=> {addItem(element.productId, element.name, 1, element.price); addNotification(); countItems()}} 
           onDelete={()=> {console.log(shoppingCart)}}
           productPage={true}
-          resize={()=>{scaleContainer()}}
+          seeMore={()=> {setOpenIncreasedBox(true);  setCurrentOpened([element.productId, element.thumbnail, element.name, element.name, element.currency, element.price]) }}
         />
         )
       }
