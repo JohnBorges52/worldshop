@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import Checkout from "./components/Checkout";
-import Products from "./components/Products";
+import Checkout from "./Pages/Checkout";
+import Products from "./Pages/Products";
 
 
 function App() {

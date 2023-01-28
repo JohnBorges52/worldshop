@@ -1,4 +1,4 @@
-.increased-size-container{
+.increased-size-container {
   position: fixed;
   width: 80%;
   max-width: 500px;
@@ -13,11 +13,10 @@
   background-color: white;
   z-index: 1;
 
-  .increased-size-close{
+  .increased-size-close {
     display: flex;
     justify-content: flex-end;
-    span{
-      // border: 1px solid transparent;
+    span {
       border-radius: 50%;
       width: 30px;
       height: 30px;
@@ -31,94 +30,86 @@
       font-weight: 200;
       margin: 10px 10px 0 0;
 
-      &:hover{
-      background-color: rgba(255, 0, 0, 0.712);
-      font-weight: 300;
-
+      &:hover {
+        background-color: rgba(255, 0, 0, 0.712);
+        font-weight: 300;
       }
     }
   }
 
-  .increased-size-image{
-    // border: 1px solid red;
+  .increased-size-image {
     width: 100%;
-    min-width: 280px ;
+    min-width: 280px;
     max-width: 500px;
     height: 60vw;
     min-height: 210px;
     max-height: 376px;
     margin: 30px auto 0;
-    img{
+    img {
       width: 100%;
       object-fit: contain;
     }
   }
 
-  .increased-size-description{
+  .increased-size-description {
     width: 70%;
     height: auto;
     margin: -20px auto auto;
     display: flex;
     justify-content: center;
 
-    span{
-      font-size: calc(1em + 0.3vw );
+    span {
+      font-size: calc(1em + 0.3vw);
       font-weight: 300;
       text-align: center;
-
     }
   }
-  .increased-size-price{
+  .increased-size-price {
     width: 50%;
     height: 70px;
     margin: 0 auto 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    &:hover{
-      span{
-
+    &:hover {
+      span {
         color: rgb(201, 143, 18);
       }
+    }
 
-      }
-
-    span{
-      font-size: calc(2em + 0.3vw );
+    span {
+      font-size: calc(2em + 0.3vw);
       text-align: center;
       color: rgb(187, 128, 51);
-
-      
-
     }
   }
 
-  .increased-size-add-btn{
+  .increased-size-add-btn {
     border: 1px solid rgb(255, 255, 255);
     width: 50%;
     height: 70px;
     margin: 20px auto 0;
     box-shadow: 2px 2px 4px 1px rgb(170, 170, 170);
-      background-color: rgb(40, 115, 255);
-      border-radius: 5px;
-      height: 40px;
-      width: 80%;
-      max-width: 250px;
-      min-width: 89px;
-      padding: 2px 13px;
-      color: white;
-      cursor: pointer;
-      font-weight: 200;
-      font-size: .9em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      white-space: nowrap;
-      margin-top: 20px;
+    background-color: rgb(40, 115, 255);
+    border-radius: 5px;
+    height: 40px;
+    width: 80%;
+    max-width: 250px;
+    min-width: 89px;
+    padding: 2px 13px;
+    color: white;
+    cursor: pointer;
+    font-weight: 200;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    margin-top: 20px;
 
-      &:hover{
-        font-weight: 300;
-        background-color: rgb(31, 83, 253);
-      }
+    &:hover {
+      font-weight: 300;
+      background-color: rgb(31, 83, 253);
+    }
   }
 }

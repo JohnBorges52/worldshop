@@ -1,6 +1,5 @@
-.top-nav{
+.top-nav {
   height: 90px;
-  // background-image: linear-gradient(to right,  rgb(201, 85, 77), rgb(255, 155, 148));
   background-color: rgb(27, 70, 90);
   align-items: center;
   line-height: 90px;
@@ -9,7 +8,7 @@
   top: 0;
   z-index: 6;
 
-  ul{
+  ul {
     margin: 0;
     padding: 0;
     display: flex;
@@ -17,26 +16,24 @@
     justify-content: space-evenly;
     position: relative;
 
-    
-    li{
+    li {
       list-style: none;
       font-weight: 300;
       font-size: 1.3em;
-      cursor: pointer;
       color: white;
       display: flex;
       align-items: center;
 
-      &:hover{
+      &:hover {
         text-decoration: underline;
       }
 
-      a{
+      a {
         text-decoration: none;
         color: white;
       }
 
-      .cart-img{
+      .cart-img {
         width: 30px;
         height: 30px;
         background-image: url(../../public/resourses/icons8-shopping-cart-white-stroke.png);
@@ -49,15 +46,14 @@
         position: relative;
         background-color: rgba(110, 110, 110, 0.815);
         border: 2px solid white;
-        transition: all .5s ease;
+        transition: all 0.5s ease;
         cursor: pointer;
 
-        &:hover{
-        background-color: rgb(68, 68, 68);
-
+        &:hover {
+          background-color: rgb(68, 68, 68);
         }
 
-        .cart-count{
+        .cart-count {
           position: absolute;
           color: rgb(255, 255, 255);
           border: 2px solid white;
@@ -65,21 +61,17 @@
           border-radius: 50%;
           right: -15px;
           top: -10px;
-          font-size: .75em;
+          font-size: 0.75em;
           font-weight: 600;
           text-align: center;
           line-height: 23px;
           width: 23px;
-        
         }
-
-
       }
     }
-    .WorldShop{
-      font-size:  1.5em;
+    .WorldShop {
+      font-size: 1.5em;
       text-decoration: underline;
     }
   }
 }
-

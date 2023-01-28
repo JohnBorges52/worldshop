@@ -1,4 +1,4 @@
-.notification-container{
+.notification-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -14,58 +14,72 @@
   left: 0;
   right: 0;
   border-radius: 5px;
-  background-color: rgb(226, 125, 10) ;
+  background-color: rgb(226, 125, 10);
   box-shadow: 5px 10px 30px -3px #8d8d8d;
   text-align: center;
   z-index: 19;
 
-
-  span{
+  span {
     color: white;
     font-weight: 300;
   }
 
-  .btn-container{
+  .btn-container {
     width: 50%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 10px;
 
-    button{
+    button {
       border: 1px solid white;
       border-radius: 3px;
       background-color: rgb(255, 255, 255);
       width: 55px;
-      font-size: .9em;
+      font-size: 0.9em;
       cursor: pointer;
       color: #666666;
-      
-      &:hover{
+
+      &:hover {
         background-color: rgb(211, 149, 253);
         color: white;
       }
     }
   }
-
 }
-.animationBounce{
-  animation: moveDown 5s ease forwards ;
+.animationBounce {
+  animation: moveDown 5s ease forwards;
 }
 
-.moveDownAndStay{
-  animation: moveDownAndStay .3s ease forwards;
+.moveDownAndStay {
+  animation: moveDownAndStay 0.3s ease forwards;
 }
 
 @keyframes moveDown {
-  
-  0%   {  transform:  translateY(0);  }
-  15%   { transform: translateY(160px); position: fixed }
-  55%   { opacity: 1; transform: translateY(160px);  position: fixed;  }
-  100%  { opacity: 0; transform: translateY(-160px)}
+  0% {
+    transform: translateY(0);
+  }
+  15% {
+    transform: translateY(160px);
+    position: fixed;
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(160px);
+    position: fixed;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-160px);
+  }
 }
 
 @keyframes moveDownAndStay {
-  0%   { transform: translateY(0);  }
-  100%   {transform: translateY(195px); position: fixed;  }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(195px);
+    position: fixed;
+  }
 }
