@@ -1,8 +1,8 @@
 # Getting Started
 
 1. Clone this Repo.
-2. Install the dependecies using **npm install**.
-3. Run the server using **npm start**.
+2. Install the dependecies using **_npm install_**.
+3. Run the server using **_npm start_**.
 4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 5. Navigate the website.
 
