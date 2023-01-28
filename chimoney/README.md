@@ -25,7 +25,7 @@ Additional tasks:
 
 As an additional, I decided to make some user experience features that I judged beneficial to the project.
 
-Product Page:
+### Product Page:
 
 !["Image Showing ProductPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/productPage.png)
 !["Image Showing Expanded Item"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/expandedItem.png)
@@ -35,7 +35,7 @@ Product Page:
 - For the item container I added a see more button to it which expand the item, showing more information to the user.
 - On the top Nav bar, it is possible to see the number of items that countains inside the cart without oppening it.
 
-Cart
+### Cart
 
 !["Image Showing CartPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/cartPage.png)
 !["Image Showing Dummy CheckoutPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/checkoutPage.png)
