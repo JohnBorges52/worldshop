@@ -1,10 +1,10 @@
 # Getting Started
 
-1.Clone this Repo.
-2.Install the dependecies using npm install.
-3.Run the server using npm start.
-4.Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-5.Navigate the website.
+1. Clone this Repo.
+2. Install the dependecies using npm install.
+3. Run the server using npm start.
+4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. Navigate the website.
 
 ## Requirements
 
@@ -34,11 +34,15 @@ As an additional, I decided to make some user experience features that I judged 
 - As the dummy data consists of 100 items, I decided to add Pagination fixing a limit of 16 items per page totaling 7 pages total.
 - For the item container I added a see more button to it which expand the item, showing more information to the user.
 - On the top Nav bar, it is possible to see the number of items that countains inside the cart without oppening it.
+- Added a blur and brightness effect to the product page when the user select the cart component or expand an item.
+
+<br/>
 
 ### Cart
 
 !["Image Showing CartPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/cartPage.png)
 !["Image Showing Dummy CheckoutPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/checkoutPage.png)
+<br/>
 
 - I added a section which shows the total financial amount of the items the user has already added to the cart.
 - Added a section which allow users to delete all the items from the cart at once and redirect the user back to the shopping page.
