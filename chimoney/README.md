@@ -27,8 +27,8 @@ As an additional, I decided to make some user experience features that I judged 
 
 Product Page:
 
-!["Image Showing ProductPage"]()
-!["Image Showing Expanded Item"]()
+!["Image Showing ProductPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/productPage.png)
+!["Image Showing Expanded Item"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/expandedItem.png)
 
 - I used the grid template in order to show items in columns, and make it easier from the user to navigate through them.
 - As the dummy data consists of 100 items, I decided to add Pagination fixing a limit of 16 items per page totaling 7 pages total.
@@ -37,8 +37,8 @@ Product Page:
 
 Cart
 
-!["Image Showing CartPage"]()
-!["Image Showing Dummy CheckoutPage"]()
+!["Image Showing CartPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/cartPage.png)
+!["Image Showing Dummy CheckoutPage"](https://github.com/JohnBorges52/Frontend-Developer-Chimoney/blob/master/chimoney/public/resourses/githubImg/checkoutPage.png)
 
 - I added a section which shows the total financial amount of the items the user has already added to the cart.
 - Added a section which allow users to delete all the items from the cart at once and redirect the user back to the shopping page.
