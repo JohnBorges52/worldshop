@@ -27,7 +27,7 @@ export default function Checkout() {
       <TopNav href={'/'} count={qty} />
       <div className="checkoutmain-container">
         <div className="type">
-          <span>Gift Cards</span>
+          <span>Checkout</span>
           <span> {totalLocalStorage} </span>
         </div>
 
@@ -93,7 +93,7 @@ export default function Checkout() {
 
           <hr />
           <div className="pay-btn">
-            <span>Pay $127</span>
+            <span>Pay {totalLocalStorage}</span>
           </div>
         </div>
       </div>

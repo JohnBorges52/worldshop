@@ -191,7 +191,7 @@ export default function ShoppingCart(props) {
 
         {!loading && qty > 0 && <div className="loading-icon"></div>}
         {items
-          .filter(item => item.category.includes('Gift Cards'))
+          .filter(item => item.category.includes('Sports & Outdoors'))
           .map(element => {
             if (cartFromLocalStorage.length !== 0) {
               for (let product of cartFromLocalStorage) {

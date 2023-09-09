@@ -223,7 +223,7 @@ export default function Products() {
         {loading && <div className="loading-icon"></div>}
         <div className="products-browser-container">
           {items
-            .filter(item => item.category.includes('Gift Cards'))
+            .filter(item => item.category.includes('Sports & Outdoors'))
             .map((element, index) => {
               if (index + 1 >= range.initial && index <= range.final) {
                 return (
@@ -268,7 +268,7 @@ export default function Products() {
           <Stack spacing={2}>
             <Pagination
               count={Math.ceil(
-                items.filter(item => item.category.includes('Gift Cards'))
+                items.filter(item => item.category.includes('Sports & Outdoors'))
                   .length / pageSize
               )}
               size="normal"

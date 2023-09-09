@@ -5,7 +5,7 @@ export default function TopNav(props) {
   return (
     <div className="top-nav">
       <ul>
-        <li className="WorldShop">WorldShop</li>
+        <li className="WorldShop"> <a href="/">WorldShop</a></li>
         <li>
           <a href="/">Products</a>
         </li>
